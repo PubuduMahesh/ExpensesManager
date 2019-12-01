@@ -6,7 +6,12 @@
     <string name="nav_header_subtitle">powered by codenerdz</string>
     <string name="nav_header_desc">Navigation header</string>
 
+    <!--side navigation menu items-->
     <string name="menu_spender">Spenders</string>
     <string name="menu_category">Category</string>
     <string name="menu_payment_method">Payment Method</string>
+
+    <!--action bar menu items-->
+    <!--category fragment-->
+    <string name="action_create_new_category">New Category</string>
 </resources>
