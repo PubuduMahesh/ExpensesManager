@@ -9,18 +9,18 @@
         android:id="@+id/nav_spender"
         android:name="com.codenerdz.expensesmanager.ui.spender.SpenderFragment"
         android:label="@string/menu_spender"
-        tools:layout="@layout/fragment_spender" />
+        tools:layout="@layout/fragment_spender_layout" />
 
     <fragment
         android:id="@+id/nav_category"
         android:name="com.codenerdz.expensesmanager.ui.category.CategoryFragment"
         android:label="@string/menu_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category_layout" />
 
     <fragment
         android:id="@+id/nav_payment_method"
         android:name="com.codenerdz.expensesmanager.ui.payment_method.PaymentMethodFragment"
         android:label="@string/menu_payment_method"
-        android:layout="@layout/fragment_payment_method"/>
+        android:layout="@layout/fragment_payment_method_layout"/>
 
 </navigation>

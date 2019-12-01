@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ExpensesManager</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Expenses Manager</string>
+    <string name="nav_header_subtitle">powered by codenerdz</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_spender">Spenders</string>
+    <string name="menu_category">Category</string>
+    <string name="menu_payment_method">Payment Method</string>
+</resources>
