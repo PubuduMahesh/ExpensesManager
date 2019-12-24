@@ -2,6 +2,8 @@ package com.codenerdz.expensesmanager.ui.payment_method;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
@@ -27,10 +29,17 @@ public class PaymentMethodHomeFragment extends Fragment {
         return view;
     }
 
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(view.getContext(),
                 (PaymentMethodList.getInstance().getPaymentMethodsArray()));
         gridView.setAdapter(paymentMethodAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.payment_method_actionbar_menu, menu);
     }
 }

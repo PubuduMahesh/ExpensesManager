@@ -14,6 +14,7 @@
     <!--action bar menu items-->
     <!--category fragment-->
     <string name="action_create_new_category">New Category</string>
+    <string name="action_create_new_payment_method">New Payment Method</string>
 
     <!--new category dialog-->
 
