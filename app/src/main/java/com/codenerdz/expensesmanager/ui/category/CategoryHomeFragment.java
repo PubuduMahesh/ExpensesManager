@@ -12,21 +12,20 @@ import android.widget.GridView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 
 public class CategoryFragment extends Fragment {
 
-    private CategoryViewModel categoryViewModel;
+
     private GridView gridView;
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        categoryViewModel =
-                ViewModelProviders.of(this).get(CategoryViewModel.class);
-        view = inflater.inflate(R.layout.fragment_category_layout, container, false);
+        view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
 
         setHasOptionsMenu(true);
@@ -58,12 +57,19 @@ public class CategoryFragment extends Fragment {
         inflater.inflate(R.menu.category_actionbar_menu, menu);
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // handle item selection
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.action_create_new_category:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.new_category,new NewCategory()).commit();
+                break;
+                default:
+                    break;
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
