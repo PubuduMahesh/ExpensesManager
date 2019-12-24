@@ -43,10 +43,10 @@ public class CategoryAdapter extends BaseAdapter {
        if(convertView == null)
        {
            final LayoutInflater layoutInflater = LayoutInflater.from(context);
-           convertView = layoutInflater.inflate(R.layout.category_item_layout,null);
+           convertView = layoutInflater.inflate(R.layout.image_text_item_layout,null);
        }
-       final ImageView imageView = (ImageView)convertView.findViewById(R.id.category_image);
-       final TextView nameTextView = (TextView)convertView.findViewById(R.id.text_category_name);
+       final ImageView imageView = (ImageView)convertView.findViewById(R.id.image_text_image);
+       final TextView nameTextView = (TextView)convertView.findViewById(R.id.image_text_text);
 
        imageView.setImageResource(category.getCategorySource());
        nameTextView.setText(category.getCategoryName());

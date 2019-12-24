@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.ui.payment_method;
+package com.codenerdz.expensesmanager.ui.category;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,26 +11,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.test.db.PaymentMethodList;
+import com.codenerdz.expensesmanager.test.db.CategoryImageList;
+import com.codenerdz.expensesmanager.ui.common.ImageAdapter;
 
-public class PaymentMethodHomeFragment extends Fragment {
 
-    private GridView gridView;
+public class CategoryNewFragment extends Fragment {
+
     private View view;
+    private GridView gridView;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.content_grid_layout, container, false);
+        view = inflater.inflate(R.layout.new_category_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
-
         setHasOptionsMenu(true);
         return view;
     }
 
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(view.getContext(),
-                (PaymentMethodList.getInstance().getPaymentMethodsArray()));
-        gridView.setAdapter(paymentMethodAdapter);
+        ImageAdapter categoryAdapter = new ImageAdapter(view.getContext(),
+                CategoryImageList.getInstance().getImageList());
+        gridView.setAdapter(categoryAdapter);
     }
 }

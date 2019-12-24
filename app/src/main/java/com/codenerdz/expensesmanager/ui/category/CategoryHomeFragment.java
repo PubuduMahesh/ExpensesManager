@@ -13,11 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 
-public class CategoryFragment extends Fragment {
+public class CategoryHomeFragment extends Fragment {
 
 
     private GridView gridView;
@@ -62,11 +61,13 @@ public class CategoryFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.action_create_new_category:
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.new_category,new NewCategory()).commit();
+                getFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(),new CategoryNewFragment(),"new fragement")
+                        .addToBackStack(null)
+                        .commit();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
