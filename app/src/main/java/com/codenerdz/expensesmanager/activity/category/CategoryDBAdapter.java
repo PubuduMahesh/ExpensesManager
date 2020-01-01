@@ -33,7 +33,6 @@ public class CategoryDBAdapter {
         ContentValues values = new ContentValues();
         values.put(CategoryDBToolkit.COL_CATEGORY_NAME,category.getCategoryName());
         values.put(CategoryDBToolkit.COL_CATEGORY_IMAGE_SOURCE,category.getCategorySource());
-        //values.put(CategoryDBToolkit.COL_CATEGORY_IMAGE,category.getCategoryImage());
         returnValue = DBAdapterTollkit.getInstance().
                 open(context).insert(CategoryDBToolkit.CATEGORY_TABLE_NAME,null,values);
         DBAdapterTollkit.getInstance().close();

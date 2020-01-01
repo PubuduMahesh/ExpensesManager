@@ -12,15 +12,18 @@
     <string name="menu_payment_method">Payment Method</string>
 
     <!--action bar menu items-->
-    <!--category fragment-->
     <string name="action_create_new_category">New Category</string>
     <string name="action_create_new_payment_method">New Payment Method</string>
+    <string name="action_create_new_spender">New Spender</string>
 
     <!--new category dialog-->
     <string name="new_category">New Category</string>
 
     <!--new payment method dialog-->
     <string name="new_payment_method">New Payment Method</string>
+
+    <!--new spender dialog-->
+    <string name="new_spender">New Spender</string>
 
     <!--common-->
     <string name="add">Add</string>

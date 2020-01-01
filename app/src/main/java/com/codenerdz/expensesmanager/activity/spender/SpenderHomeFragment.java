@@ -2,8 +2,12 @@ package com.codenerdz.expensesmanager.activity.spender;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,23 +17,55 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.category.CategoryAdapter;
+import com.codenerdz.expensesmanager.activity.category.CategoryDBAdapter;
+import com.codenerdz.expensesmanager.activity.category.CategoryNewFragment;
 
-public class SpenderFragment extends Fragment {
+public class SpenderHomeFragment extends Fragment {
 
-    private SpenderViewModel spenderViewModel;
+    private GridView gridView;
+    private View view;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        spenderViewModel =
-                ViewModelProviders.of(this).get(SpenderViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_spender_layout, container, false);
-        final TextView textView = root.findViewById(R.id.text_spender);
-        spenderViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        view = inflater.inflate(R.layout.content_grid_layout, container, false);
+        gridView = (GridView) view.findViewById(R.id.grid_view);
+
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        SpenderAdapter spenderAdapter = new SpenderAdapter(view.getContext(),
+                SpenderDBAdapter.getInstance().fetchAllSpenders(view.getContext()));
+        gridView.setAdapter(spenderAdapter);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.spender_actionbar_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_create_new_spender:
+                getFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(),
+                                new SpenderNewFragment(),"new spender fragement")
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
