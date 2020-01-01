@@ -10,7 +10,7 @@ public class CategoryDBToolkit {
     private CategoryDBToolkit() {
     }
 
-    public static final String TABLE_NAME = "tbl_category";
+    public static final String CATEGORY_TABLE_NAME = "tbl_category";
     public static final String COL_CATEGORY_ID = "_id";
     public static final String COL_CATEGORY_NAME = "categoryName";
     public static final String COL_CATEGORY_IMAGE_SOURCE = "categoryImageSource";
@@ -18,7 +18,7 @@ public class CategoryDBToolkit {
 
     public String getCategoryTableQueryString()
     {
-        return "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ( " +
+        return "CREATE TABLE IF NOT EXISTS " + CATEGORY_TABLE_NAME + " ( " +
                 COL_CATEGORY_ID + " INTEGER PRIMARY KEY autoincrement, " +
                 COL_CATEGORY_NAME + " TEXT, " +
                 COL_CATEGORY_IMAGE_SOURCE + " INTEGER );";

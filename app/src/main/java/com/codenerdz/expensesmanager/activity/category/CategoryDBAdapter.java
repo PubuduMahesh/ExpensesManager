@@ -35,7 +35,7 @@ public class CategoryDBAdapter {
         values.put(CategoryDBToolkit.COL_CATEGORY_IMAGE_SOURCE,category.getCategorySource());
         //values.put(CategoryDBToolkit.COL_CATEGORY_IMAGE,category.getCategoryImage());
         returnValue = DBAdapterTollkit.getInstance().
-                open(context).insert(CategoryDBToolkit.TABLE_NAME,null,values);
+                open(context).insert(CategoryDBToolkit.CATEGORY_TABLE_NAME,null,values);
         DBAdapterTollkit.getInstance().close();
         return returnValue;
     }
@@ -43,7 +43,7 @@ public class CategoryDBAdapter {
     public Category[] fetchAllCategory(Context context)
     {
         Cursor categoryCursor = DBAdapterTollkit.getInstance().
-                open(context).query(CategoryDBToolkit.TABLE_NAME,new String[]
+                open(context).query(CategoryDBToolkit.CATEGORY_TABLE_NAME,new String[]
                 {
                         CategoryDBToolkit.COL_CATEGORY_ID,
                         CategoryDBToolkit.COL_CATEGORY_NAME,

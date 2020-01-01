@@ -34,7 +34,7 @@ public class PaymentMethodHomeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         PaymentMethodAdapter paymentMethodAdapter = new PaymentMethodAdapter(view.getContext(),
-                (PaymentMethodList.getInstance().getPaymentMethodsArray()));
+                PaymentMethodDBAdapter.getInstance().fetchAllPaymentMethods(view.getContext()));
         gridView.setAdapter(paymentMethodAdapter);
     }
 

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.codenerdz.expensesmanager.toolkit.category.CategoryDBToolkit;
+import com.codenerdz.expensesmanager.toolkit.payment_method.PaymentMethodDBToolkit;
 
 public class DBAdapterTollkit{
 
@@ -42,12 +43,14 @@ public class DBAdapterTollkit{
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CategoryDBToolkit.getInstance().getCategoryTableQueryString());
+            db.execSQL(PaymentMethodDBToolkit.getInstance().getPaymentMethodTableQueryString());
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
         {
-            db.execSQL(DROP_TABLE+ CategoryDBToolkit.getInstance().TABLE_NAME);
+            db.execSQL(DROP_TABLE+ CategoryDBToolkit.CATEGORY_TABLE_NAME);
+            db.execSQL(DROP_TABLE+ PaymentMethodDBToolkit.PAYMENT_METHOD_TABLE_NAME);
             onCreate(db);
         }
     }

@@ -31,7 +31,7 @@ android:layout_height="match_parent">
             android:layout_weight="1"
             android:textSize="20sp" />
         <Button
-            android:id="@+id/add_new_payment_method"
+            android:id="@+id/add_new_payment_method_button"
             android:layout_width="70dp"
             android:layout_height="35dp"
             android:background="@color/green"
@@ -55,7 +55,7 @@ android:layout_height="match_parent">
             android:text="@string/name"
             android:textSize="20sp" />
         <EditText
-            android:id="@+id/payment_method_name"
+            android:id="@+id/payment_method_name_text_field"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="@color/light_grey"

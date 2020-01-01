@@ -48,7 +48,7 @@ public class PaymentMethodAdapter extends BaseAdapter {
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.image_text_image);
         final TextView nameTextView = (TextView)convertView.findViewById(R.id.image_text_text);
 
-        imageView.setImageResource(paymentMethod.getPaymentMethodSource());
+        imageView.setImageResource(paymentMethod.getPaymentMethodImageSource());
         nameTextView.setText(paymentMethod.getPaymentMethodName());
         return convertView;
     }

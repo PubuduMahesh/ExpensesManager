@@ -16,7 +16,6 @@ import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
 import com.codenerdz.expensesmanager.test.db.CategoryImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
-import com.codenerdz.expensesmanager.toolkit.ActionValidatorToolkit;
 
 
 public class CategoryNewFragment extends NewItemFragment<Category>
@@ -66,7 +65,7 @@ public class CategoryNewFragment extends NewItemFragment<Category>
                             (Integer)(((ImageView)selectedImage.findViewById(R.id.image)).getTag());
                 }
 
-                if(validateAddNewCategoryAction(categorySource, categoryName))
+                if(validateAddNewItemAction(categorySource, categoryName))
                 {
                     category.setCategoryName(categoryName);
                     category.setCategorySource(categorySource);

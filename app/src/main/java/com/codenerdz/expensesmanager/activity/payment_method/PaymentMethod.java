@@ -1,10 +1,10 @@
 package com.codenerdz.expensesmanager.activity.payment_method;
 
 public class PaymentMethod {
-    String paymentMethodName;
-    int paymentMethodID;
-    int paymentMethodSource;
-    boolean isSharedOption;
+    private String paymentMethodName;
+    private int paymentMethodID;
+    private int paymentMethodSource;
+    private boolean isSharedOption;
 
     public PaymentMethod(String paymentMethodName,
                          int paymentMethodID,int paymentMethodSource,boolean isSharedOption)
@@ -40,12 +40,12 @@ public class PaymentMethod {
         this.paymentMethodID = paymentMethodID;
     }
 
-    public int getPaymentMethodSource()
+    public int getPaymentMethodImageSource()
     {
         return paymentMethodSource;
     }
 
-    public void setPaymentMethodSource(int paymentMethodSource)
+    public void setPaymentMethodImageSource(int paymentMethodSource)
     {
         this.paymentMethodSource = paymentMethodSource;
     }

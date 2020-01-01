@@ -48,7 +48,7 @@ public abstract class NewItemFragment <T> extends Fragment
 
 
 
-    public boolean validateAddNewCategoryAction(int imageSource, String itemName) {
+    public boolean validateAddNewItemAction(int imageSource, String itemName) {
         return ActionValidatorToolkit.getInstance().isNameTextFieldEmpty(itemName) &&
                 ActionValidatorToolkit.getInstance().isImageFieldEmpty(imageSource);
     }

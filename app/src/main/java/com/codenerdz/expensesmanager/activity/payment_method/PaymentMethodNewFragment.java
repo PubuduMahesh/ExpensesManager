@@ -4,23 +4,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
 import com.codenerdz.expensesmanager.test.db.PaymentMethodImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
 
-public class PaymentMethodNewFragment extends Fragment {
+public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
+{
     private View view;
     private GridView gridView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.new_payment_method_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setHasOptionsMenu(true);
@@ -28,10 +33,49 @@ public class PaymentMethodNewFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
         ImageAdapter paymentMethodImageAdapter = new ImageAdapter(view.getContext(),
                 PaymentMethodImageList.getInstance().getImageList());
         gridView.setAdapter(paymentMethodImageAdapter);
+        imageItemSelectListener(gridView);
+        addPaymentMethodButtonClickListener();
+    }
+
+    private void addPaymentMethodButtonClickListener()
+    {
+        Button addButton = (Button)view.findViewById(R.id.add_new_payment_method_button);
+        addButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int paymentMethodImageSource = -100;
+                PaymentMethod paymentMethod = new PaymentMethod();
+                String paymentMethodName = ((EditText)view.findViewById
+                        (R.id.payment_method_name_text_field)).getText().toString();
+                if(selectedImage != null)
+                {
+                    paymentMethodImageSource =
+                            (Integer)(((ImageView)selectedImage.findViewById(R.id.image)).getTag());
+                }
+
+                if(validateAddNewItemAction(paymentMethodImageSource, paymentMethodName))
+                {
+                    paymentMethod.setPaymentMethodName(paymentMethodName);
+                    paymentMethod.setPaymentMethodImageSource(paymentMethodImageSource);
+                    createNewItem(paymentMethod);
+                    getFragmentManager().popBackStack();
+
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void createNewItem(PaymentMethod paymentMethod) {
+        PaymentMethodDBAdapter.getInstance().createPaymentMethod(paymentMethod,view.getContext());
     }
 }
