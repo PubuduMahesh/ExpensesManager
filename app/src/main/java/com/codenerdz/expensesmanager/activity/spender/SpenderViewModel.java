@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.ui.spender;
+package com.codenerdz.expensesmanager.activity.spender;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

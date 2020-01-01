@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.ui.common;
+package com.codenerdz.expensesmanager.activity.common;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -47,7 +47,7 @@ public class ImageAdapter extends BaseAdapter
             convertView = layoutInflater.inflate(R.layout.image_item_layout,null);
         }
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.image);
-
+        imageView.setTag(image);
         imageView.setImageResource(image);
         return convertView;
     }

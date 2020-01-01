@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.ui.payment_method;
+package com.codenerdz.expensesmanager.activity.payment_method;
 
 import android.content.Context;
 import android.view.LayoutInflater;

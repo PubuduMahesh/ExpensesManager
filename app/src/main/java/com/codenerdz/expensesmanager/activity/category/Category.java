@@ -1,9 +1,14 @@
-package com.codenerdz.expensesmanager.ui.category;
+package com.codenerdz.expensesmanager.activity.category;
 
+import java.sql.Blob;
+
+/**
+ * Model Class for Category.
+ */
 public class Category {
-    String categoryName;
-    int categoryID;
-    int categorySource;
+    private String categoryName;
+    private int categoryID;
+    private int categorySource;
 
     public Category()
     {

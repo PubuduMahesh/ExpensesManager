@@ -17,10 +17,12 @@
     <string name="action_create_new_payment_method">New Payment Method</string>
 
     <!--new category dialog-->
-
-    <string name="add">Add</string>
     <string name="new_category">New Category</string>
 
+    <!--new payment method dialog-->
+    <string name="new_payment_method">New Payment Method</string>
+
     <!--common-->
+    <string name="add">Add</string>
     <string name="name">Name</string>
 </resources>

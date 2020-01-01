@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.ui.category;
+package com.codenerdz.expensesmanager.activity.category;
 
 import android.content.Context;
 import android.view.LayoutInflater;
