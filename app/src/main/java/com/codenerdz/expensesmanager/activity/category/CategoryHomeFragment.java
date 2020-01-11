@@ -11,14 +11,17 @@ import android.widget.GridView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
+import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 /**
  * Initially display available category list as a grid.
  */
-public class CategoryHomeFragment extends Fragment {
+public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
 
 
     private GridView gridView;
@@ -26,16 +29,18 @@ public class CategoryHomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+                             ViewGroup container, Bundle savedInstanceState)
+    {
         view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
-
+        setTitle(getResources().getString(R.string.menu_category));
         setHasOptionsMenu(true);
         return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         CategoryAdapter categoryAdapter = new CategoryAdapter(view.getContext(),
@@ -44,13 +49,15 @@ public class CategoryHomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.category_actionbar_menu, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         switch (item.getItemId())
         {
             case R.id.action_create_new_category:
@@ -66,4 +73,10 @@ public class CategoryHomeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void setTitle(String title)
+    {
+        ToolbarToolkit.getInstance().
+                setTitle((Toolbar)getActivity().findViewById(R.id.toolbar),title);
+    }
 }

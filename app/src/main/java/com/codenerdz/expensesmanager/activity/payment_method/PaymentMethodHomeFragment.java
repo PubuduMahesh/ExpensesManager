@@ -11,12 +11,16 @@ import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.test.db.PaymentMethodList;
+import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
-public class PaymentMethodHomeFragment extends Fragment {
+public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
+{
 
     private GridView gridView;
     private View view;
@@ -25,7 +29,7 @@ public class PaymentMethodHomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
-
+        setTitle(getResources().getString(R.string.menu_payment_method));
         setHasOptionsMenu(true);
         return view;
     }
@@ -58,5 +62,13 @@ public class PaymentMethodHomeFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setTitle(String title)
+    {
+        ToolbarToolkit.getInstance().
+                setTitle((Toolbar)getActivity().findViewById(R.id.toolbar),title);
+
     }
 }

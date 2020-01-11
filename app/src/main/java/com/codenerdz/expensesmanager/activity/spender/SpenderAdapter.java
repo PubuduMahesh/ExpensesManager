@@ -4,43 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.category.Category;
+import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
 
-public class SpenderAdapter extends BaseAdapter
+public class SpenderAdapter extends CommonItemAdapter<Spender>
 {
-    private Context context;
-    private Spender[] spenders;
-    public SpenderAdapter(Context context, Spender[] spenders)
-    {
-        this.context = context;
-        this.spenders = spenders;
-    }
-
-    @Override
-    public int getCount()
-    {
-        return spenders.length;
-    }
-
-    @Override
-    public long getItemId(int position)
-    {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
+    public SpenderAdapter(Context context, Spender[] items) {
+        super(context, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Spender spender = spenders[position];
+        final Spender spender = items[position];
 
         if(convertView == null)
         {

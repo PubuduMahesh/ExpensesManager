@@ -36,6 +36,8 @@ public class PaymentMethodDBAdapter
         contentValues.put(PaymentMethodDBToolkit.COL_PAYMENT_METHOD_NAME,pm.getPaymentMethodName());
         contentValues.put(PaymentMethodDBToolkit.COL_PAYMENT_METHOD_IMAGE_SOURCE,
                 pm.getPaymentMethodImageSource());
+        contentValues.put(PaymentMethodDBToolkit.COL_PAYMENT_METHOD_IS_SHARED_OPTION,
+                pm.getIsSharedOption());
         returnValue = DBAdapterTollkit.getInstance().open(context).insert
                 (PaymentMethodDBToolkit.PAYMENT_METHOD_TABLE_NAME,null,contentValues);
         DBAdapterTollkit.getInstance().close();

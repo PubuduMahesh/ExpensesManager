@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
 import com.codenerdz.expensesmanager.test.db.CategoryImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
+import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 
 public class CategoryNewFragment extends NewItemFragment<Category>
@@ -32,6 +34,7 @@ public class CategoryNewFragment extends NewItemFragment<Category>
         view = inflater.inflate(R.layout.new_category_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setHasOptionsMenu(true);
+        setTitle(getResources().getString(R.string.new_category));
         return view;
     }
 
@@ -73,7 +76,6 @@ public class CategoryNewFragment extends NewItemFragment<Category>
                     getFragmentManager().popBackStack();
 
                 }
-
             }
         });
     }

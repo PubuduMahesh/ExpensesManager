@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
@@ -19,8 +20,9 @@ import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.category.CategoryDBAdapter;
 import com.codenerdz.expensesmanager.test.db.CategoryImageList;
 import com.codenerdz.expensesmanager.toolkit.ActionValidatorToolkit;
+import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
-public abstract class NewItemFragment <T> extends Fragment
+public abstract class NewItemFragment <T> extends Fragment implements ToolbarDetail
 {
     public View selectedImage;
 
@@ -55,4 +57,9 @@ public abstract class NewItemFragment <T> extends Fragment
 
     public abstract void createNewItem(T item);
 
+    @Override
+    public void setTitle(String title) {
+        ToolbarToolkit.getInstance().
+                setTitle((Toolbar)getActivity().findViewById(R.id.toolbar),title);
+    }
 }

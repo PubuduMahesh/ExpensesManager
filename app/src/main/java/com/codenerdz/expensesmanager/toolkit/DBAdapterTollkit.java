@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.codenerdz.expensesmanager.toolkit.category.CategoryDBToolkit;
+import com.codenerdz.expensesmanager.toolkit.expense.ExpenditureDBToolkit;
 import com.codenerdz.expensesmanager.toolkit.payment_method.PaymentMethodDBToolkit;
 import com.codenerdz.expensesmanager.toolkit.spender.SpenderDBToolkit;
 
@@ -46,6 +47,7 @@ public class DBAdapterTollkit{
             db.execSQL(CategoryDBToolkit.getInstance().getCategoryTableQueryString());
             db.execSQL(PaymentMethodDBToolkit.getInstance().getPaymentMethodTableQueryString());
             db.execSQL(SpenderDBToolkit.getInstance().getSpenderTableQueryString());
+            db.execSQL(ExpenditureDBToolkit.getInstance().getExpenditureTableQueryString());
         }
 
         @Override
@@ -54,6 +56,7 @@ public class DBAdapterTollkit{
             db.execSQL(DROP_TABLE+ CategoryDBToolkit.CATEGORY_TABLE_NAME);
             db.execSQL(DROP_TABLE+ PaymentMethodDBToolkit.PAYMENT_METHOD_TABLE_NAME);
             db.execSQL(DROP_TABLE+ SpenderDBToolkit.SPENDER_TABLE_NAME);
+            db.execSQL(DROP_TABLE+ ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME);
             onCreate(db);
         }
     }

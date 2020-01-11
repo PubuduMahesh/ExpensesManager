@@ -31,6 +31,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
         view = inflater.inflate(R.layout.new_spender_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setHasOptionsMenu(true);
+        setTitle(getResources().getString(R.string.new_spender));
         return view;
     }
 

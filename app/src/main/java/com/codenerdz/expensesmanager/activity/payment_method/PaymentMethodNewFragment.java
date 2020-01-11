@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
         view = inflater.inflate(R.layout.new_payment_method_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setHasOptionsMenu(true);
+        setTitle(getResources().getString(R.string.new_payment_method));
         return view;
     }
 
@@ -52,6 +54,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
             public void onClick(View v)
             {
                 int paymentMethodImageSource = -100;
+                boolean isSharedOption = false;
                 PaymentMethod paymentMethod = new PaymentMethod();
                 String paymentMethodName = ((EditText)view.findViewById
                         (R.id.payment_method_name_text_field)).getText().toString();
@@ -60,18 +63,28 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
                     paymentMethodImageSource =
                             (Integer)(((ImageView)selectedImage.findViewById(R.id.image)).getTag());
                 }
+                isSharedOption = isSharedOption(paymentMethod);
 
                 if(validateAddNewItemAction(paymentMethodImageSource, paymentMethodName))
                 {
+                    paymentMethod.setSharedOption(isSharedOption);
                     paymentMethod.setPaymentMethodName(paymentMethodName);
                     paymentMethod.setPaymentMethodImageSource(paymentMethodImageSource);
                     createNewItem(paymentMethod);
                     getFragmentManager().popBackStack();
-
                 }
 
             }
         });
+    }
+
+    private boolean isSharedOption(PaymentMethod paymentMethod) {
+        if(((RadioButton)view.findViewById(R.id.radio_button_shared)).isChecked())
+        {
+            return true;
+        }
+        return false;
+
     }
 
     @Override

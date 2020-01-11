@@ -49,7 +49,7 @@ public class PaymentMethod {
     {
         this.paymentMethodSource = paymentMethodSource;
     }
-    public boolean isSharedOption()
+    public boolean getIsSharedOption()
     {
         return isSharedOption;
     }

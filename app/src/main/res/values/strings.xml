@@ -25,7 +25,12 @@
     <!--new spender dialog-->
     <string name="new_spender">New Spender</string>
 
+    <!--expenditure-->
+    <string name="expenses">Expenses</string>
+
     <!--common-->
     <string name="add">Add</string>
     <string name="name">Name</string>
+    <string name="individual">Individual</string>
+    <string name="shared">Shared</string>
 </resources>

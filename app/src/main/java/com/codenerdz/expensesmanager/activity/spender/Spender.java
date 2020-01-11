@@ -2,9 +2,9 @@ package com.codenerdz.expensesmanager.activity.spender;
 
 public class Spender
 {
-    int spenderImageSource;
-    String spenderName;
-    int spenderID;
+    private int spenderImageSource;
+    private String spenderName;
+    private int spenderID;
 
     public int getSpenderImageSource() {
         return spenderImageSource;

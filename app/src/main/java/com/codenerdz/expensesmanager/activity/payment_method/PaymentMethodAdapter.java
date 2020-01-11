@@ -4,41 +4,22 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
 
-public class PaymentMethodAdapter extends BaseAdapter {
-    private Context context;
-    private PaymentMethod[] paymentMethods;
-    public PaymentMethodAdapter(Context context, PaymentMethod[] paymentMethods)
-    {
-        this.context = context;
-        this.paymentMethods = paymentMethods;
-    }
+public class PaymentMethodAdapter extends CommonItemAdapter <PaymentMethod> {
 
-    @Override
-    public int getCount()
-    {
-        return paymentMethods.length;
-    }
 
-    @Override
-    public long getItemId(int position)
-    {
-        return 0;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
+    public PaymentMethodAdapter(Context context, PaymentMethod[] items) {
+        super(context, items);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final PaymentMethod paymentMethod = paymentMethods[position];
+        final PaymentMethod paymentMethod = items[position];
 
         if(convertView == null)
         {
