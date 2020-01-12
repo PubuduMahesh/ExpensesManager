@@ -7,16 +7,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
-import com.codenerdz.expensesmanager.test.db.PaymentMethodList;
+import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
+import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
@@ -24,6 +27,7 @@ public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
 
     private GridView gridView;
     private View view;
+    private PaymentMethodExpenseViewModel<PaymentMethod> model;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.menu_payment_method));
         setHasOptionsMenu(true);
+        setSlectedItem();
         return view;
     }
 
@@ -70,5 +75,17 @@ public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
         ToolbarToolkit.getInstance().
                 setTitle((Toolbar)getActivity().findViewById(R.id.toolbar),title);
 
+    }
+
+    private void setSlectedItem() {
+        model = ViewModelProviders.of(getActivity()).get(PaymentMethodExpenseViewModel.class);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                PaymentMethod paymentMethod = (PaymentMethod) gridView.getItemAtPosition(position);
+                model.selectItem(paymentMethod);
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 }

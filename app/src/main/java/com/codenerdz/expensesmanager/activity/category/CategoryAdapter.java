@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
 
+import java.security.PublicKey;
+
 public class CategoryAdapter extends CommonItemAdapter<Category>
 {
 
@@ -34,4 +36,5 @@ public class CategoryAdapter extends CommonItemAdapter<Category>
         nameTextView.setText(category.getCategoryName());
         return convertView;
     }
+
 }

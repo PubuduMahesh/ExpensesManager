@@ -7,15 +7,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
+import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 /**
@@ -26,6 +29,7 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
 
     private GridView gridView;
     private View view;
+    private CategoryExpenseViewModel<Category> model;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,7 +39,22 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.menu_category));
         setHasOptionsMenu(true);
+        setSlectedItem();
         return view;
+    }
+
+    private void setSlectedItem()
+    {
+        model = ViewModelProviders.of(getActivity()).get(CategoryExpenseViewModel.class);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Category category = (Category)gridView.getItemAtPosition(position);
+                model.selectItem(category);
+                getFragmentManager().popBackStack();
+            }
+        });
+
     }
 
     @Override

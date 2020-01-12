@@ -29,7 +29,7 @@ public abstract class CommonItemAdapter <T> extends BaseAdapter
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return items[position];
     }
 
     @Override

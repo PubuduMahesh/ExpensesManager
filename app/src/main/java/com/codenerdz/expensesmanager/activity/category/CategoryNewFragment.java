@@ -33,7 +33,6 @@ public class CategoryNewFragment extends NewItemFragment<Category>
     {
         view = inflater.inflate(R.layout.new_category_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
-        setHasOptionsMenu(true);
         setTitle(getResources().getString(R.string.new_category));
         return view;
     }

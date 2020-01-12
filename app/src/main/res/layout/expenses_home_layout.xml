@@ -33,7 +33,6 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:inputType="date"
-            android:text="sanath"
             android:textSize="20sp" />
     </LinearLayout>
 
