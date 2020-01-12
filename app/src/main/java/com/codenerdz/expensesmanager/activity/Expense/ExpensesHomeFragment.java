@@ -17,10 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.category.CategoryNewFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
+import com.codenerdz.expensesmanager.activity.spender.Spender;
+import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.test.db.ExpnsesList;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
@@ -34,6 +37,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
 {
     private ListView expensesListView;
     private View view;
+    private Spender selectedSpender;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,6 +47,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         expensesListView = (ListView) view.findViewById(R.id.expenses_list_view);
         setTitle(getResources().getString(R.string.expenses));
         setHasOptionsMenu(true);
+        spenderSelectedActionFired();
         return view;
     }
 
@@ -50,9 +55,9 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-
         ExpensesAdapter expenditureAdapter = new ExpensesAdapter(view.getContext(),
-                ExpnsesList.getInstance().getExpensesList());
+                ExpenditureDBAdapter.getInstance().fetchAllExpensesBySpender(view.getContext()
+                       ,selectedSpender));
         expensesListView.setAdapter(expenditureAdapter);
         setDate();
     }
@@ -97,5 +102,17 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c);
         dateTextField.setText(formattedDate);
+    }
+
+    private void setSelectedSpender(Spender spender)
+    {
+        selectedSpender = spender;
+    }
+
+    private void spenderSelectedActionFired()
+    {
+        final SpenderExpenseViewModel<Spender> modelSpender =
+                ViewModelProviders.of(getActivity()).get(SpenderExpenseViewModel.class);
+        setSelectedSpender(modelSpender.getSelectedItem());
     }
 }

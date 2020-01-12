@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
 
 public class ExpensesAdapter extends CommonItemAdapter <Expense>
@@ -29,7 +27,7 @@ public class ExpensesAdapter extends CommonItemAdapter <Expense>
                     inflate(R.layout.expenses_list_item_layout, parent, false);
         }
         final TextView description =
-                (TextView)convertView.findViewById(R.id.expens_reason_text_field);
+                (TextView)convertView.findViewById(R.id.expense_reason_text_field);
         final TextView value = (TextView)convertView.findViewById(R.id.expense_value_text_field);
 
         description.setText(expense.getExpenditureDescription());

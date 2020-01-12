@@ -14,7 +14,7 @@ android:layout_height="match_parent">
             android:layout_weight="1"
             android:textSize="20sp" />
         <Button
-            android:id="@+id/add_new_payment_method_button"
+            android:id="@+id/add_new_expense"
             android:layout_width="70dp"
             android:layout_height="35dp"
             android:background="@color/green"
@@ -29,14 +29,14 @@ android:layout_height="match_parent">
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/payment_method_name_label"
+            android:id="@+id/expense_description_textfield"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Description"
             android:textSize="20sp" />
         <EditText
-            android:id="@+id/payment_method_name_text_field"
+            android:id="@+id/expense_value_text_field"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -51,20 +51,20 @@ android:layout_height="match_parent">
         android:orientation="vertical">
 
         <RadioGroup
-            android:id="@+id/is_shared_expense_radio_group"
+            android:id="@+id/expense_radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/radio_button_private"
+                android:id="@+id/radio_button_private_expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/individual"
                 android:checked="true" />
 
             <RadioButton
-                android:id="@+id/radio_button_public"
+                android:id="@+id/radio_button_public_expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shared" />

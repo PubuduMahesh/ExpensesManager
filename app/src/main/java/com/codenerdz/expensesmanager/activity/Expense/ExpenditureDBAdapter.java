@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.toolkit.DBAdapterTollkit;
 import com.codenerdz.expensesmanager.toolkit.expense.ExpenditureDBToolkit;
 
@@ -39,6 +40,8 @@ public class ExpenditureDBAdapter
                 COL_SPENDER,expense.getExpenser());
         contentValues.put(ExpenditureDBToolkit.
                 COL_IS_SHARED_EXPENDITURE,expense.isSharedExpenditure());
+        contentValues.put(ExpenditureDBToolkit.
+                COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategory());
         returnValue = DBAdapterTollkit.getInstance().open(context).insert(ExpenditureDBToolkit.
                 EXPENDITURE_TABLE_NAME,null,contentValues);
         DBAdapterTollkit.getInstance().close();
@@ -48,16 +51,9 @@ public class ExpenditureDBAdapter
     public Expense[] fetchAllExpenses(Context context)
     {
         Cursor expenseCursor = DBAdapterTollkit.getInstance().
-                open(context).query(ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME,new String[]
-                        {
-                                ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT,
-                                ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY,
-                                ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION,
-                                ExpenditureDBToolkit.COL_EXPENDITURE_ID,
-                                ExpenditureDBToolkit.COL_SPENDER,
-                                ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE
-                        },
-                null,null,null,null,null);
+                open(context).query(ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME,
+                ExpenseTableColumnArray(),null,null,null,null,
+                null);
         if(expenseCursor != null)
         {
             expenseCursor.moveToFirst();
@@ -65,6 +61,29 @@ public class ExpenditureDBAdapter
         DBAdapterTollkit.getInstance().close();
         return getExpensesArray(expenseCursor);
 
+    }
+
+    private String[] ExpenseTableColumnArray()
+    {
+        return new String[]
+                {
+                        ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT,
+                        ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY,
+                        ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION,
+                        ExpenditureDBToolkit.COL_EXPENDITURE_ID,
+                        ExpenditureDBToolkit.COL_SPENDER,
+                        ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE
+                };
+    }
+
+    public Expense[] fetchAllExpensesBySpender(Context context, Spender spender)
+    {
+        Cursor expenseCursor = DBAdapterTollkit.getInstance().
+                open(context).query(ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME,
+                ExpenseTableColumnArray(),ExpenditureDBToolkit.COL_SPENDER+"=?",
+                new String[]{spender.getSpenderID()+""},null,null,
+                null);
+        return getExpensesArray(expenseCursor);
     }
 
     private Expense[] getExpensesArray(Cursor cursor)
@@ -83,9 +102,9 @@ public class ExpenditureDBAdapter
                 expense.setExpenditureAmount
                         (cursor.getInt
                                 (cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT)));
-                expensesArrayList.add(expense);
                 expense.setExpenditureCategory(cursor.getInt(cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY)));
                 expense.setExpenser(cursor.getInt(cursor.getColumnIndex(ExpenditureDBToolkit.COL_SPENDER)));
+                expensesArrayList.add(expense);
             }
         }
         Expense[] expensesArray = new Expense[expensesArrayList.size()];

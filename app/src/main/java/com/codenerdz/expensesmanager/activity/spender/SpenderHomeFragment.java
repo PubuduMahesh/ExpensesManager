@@ -20,16 +20,20 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.Expense.ExpensesHomeFragment;
+import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.category.CategoryAdapter;
 import com.codenerdz.expensesmanager.activity.category.CategoryDBAdapter;
 import com.codenerdz.expensesmanager.activity.category.CategoryNewFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
+import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
+import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
 
     private GridView gridView;
     private View view;
+    private SpenderExpenseViewModel<Spender> spenderViewmodel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,9 +81,11 @@ public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
 
     private void spenderClickListener()
     {
+        spenderViewmodel = ViewModelProviders.of(getActivity()).get(SpenderExpenseViewModel .class);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                spenderViewmodel.selectItem((Spender)gridView.getItemAtPosition(position));
                 getFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(),
                                 new ExpensesHomeFragment(),"expenser home fragement")
