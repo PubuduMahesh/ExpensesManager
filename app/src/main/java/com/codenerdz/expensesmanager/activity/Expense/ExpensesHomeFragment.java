@@ -25,6 +25,7 @@ import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.test.db.ExpnsesList;
+import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 import org.w3c.dom.Text;
@@ -38,11 +39,13 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     private ListView expensesListView;
     private View view;
     private Spender selectedSpender;
+    String parentFragment;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
+        parentFragment = getArguments().getString(ExpensesManagerConstantToolkit.PARENT_FRAGMENT);
         view = inflater.inflate(R.layout.expenses_home_layout,container,false);
         expensesListView = (ListView) view.findViewById(R.id.expenses_list_view);
         setTitle(getResources().getString(R.string.expenses));

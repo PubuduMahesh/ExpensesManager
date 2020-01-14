@@ -24,9 +24,11 @@ import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.category.CategoryAdapter;
 import com.codenerdz.expensesmanager.activity.category.CategoryDBAdapter;
 import com.codenerdz.expensesmanager.activity.category.CategoryNewFragment;
+import com.codenerdz.expensesmanager.activity.common.NextFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
+import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
@@ -85,14 +87,21 @@ public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+
                 spenderViewmodel.selectItem((Spender)gridView.getItemAtPosition(position));
-                getFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(),
-                                new ExpensesHomeFragment(),"expenser home fragement")
-                        .addToBackStack(null)
-                        .commit();
+                openExpenseHomeFragment();
             }
         });
+    }
+
+    private void openExpenseHomeFragment() {
+        getFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(),
+                        NextFragment.getInstance().setArgumentsForNextFragment
+                                (new ExpensesHomeFragment(), ExpensesManagerConstantToolkit.
+                                        SPENDER_HOME_AS_PARENT_FRAGMENT),"")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

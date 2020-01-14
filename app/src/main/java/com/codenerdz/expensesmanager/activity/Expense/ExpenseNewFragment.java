@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.category.CategoryHomeFragment;
+import com.codenerdz.expensesmanager.activity.common.NextFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethod;
 import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethodHomeFragment;
@@ -24,6 +25,7 @@ import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
+import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class ExpenseNewFragment extends Fragment implements ToolbarDetail
@@ -35,11 +37,13 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     private PaymentMethod selectedPaymentMethod;
     private Button categoryButton;
     private Button paymentMethodButton;
+    private String parentFragment;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
+        parentFragment = NextFragment.getInstance().setParentFragment(this);
         view = inflater.inflate(R.layout.new_expense_layout, container, false);
         setTitle(getResources().getString(R.string.new_expense));
         return view;

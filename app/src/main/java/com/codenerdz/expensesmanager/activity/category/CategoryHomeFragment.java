@@ -17,8 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.NextFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
+import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 /**
@@ -30,16 +32,21 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
     private GridView gridView;
     private View view;
     private CategoryExpenseViewModel<Category> model;
+    private String parentFragment;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
+        parentFragment = NextFragment.getInstance().setParentFragment(this);
         view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.menu_category));
         setHasOptionsMenu(true);
-        setSlectedItem();
+        if(parentFragment!=null && parentFragment.equals(ExpensesManagerConstantToolkit.SPENDER_HOME_AS_PARENT_FRAGMENT))
+        {
+            setSlectedItem();
+        }
         return view;
     }
 
