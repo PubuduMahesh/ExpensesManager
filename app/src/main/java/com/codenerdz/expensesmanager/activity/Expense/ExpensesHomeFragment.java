@@ -25,7 +25,6 @@ import com.codenerdz.expensesmanager.toolkit.DateTimeToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
 {
@@ -53,13 +52,8 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        updateExpenditureAdapter(new ExpensesAdapter(view.getContext(),
-                ExpenditureDBAdapter.getInstance().fetchAllExpensesBySpenderDate(
-                        view.getContext(),
-                        selectedSpender,
-                        DateTimeToolkit.getInstance().getMinMaxMillisecondsForGivenDate
-                                (DateTimeToolkit.getInstance().getCurrentDate())
-                        )));
+        setCurrentDate();
+        loadExpenses();
         setDateTextField(DateTimeToolkit.getInstance().getCurrentDate());
     }
 
@@ -115,15 +109,15 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                         return true;
                     case MotionEvent.ACTION_UP:
                         float secondX = event.getX();
-                        if (Math.abs(secondX - firstX) > minDistance) {
-                            if (secondX > firstX) {
-                                try {
-                                    previousDateExpenses();
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
+                        if (Math.abs(secondX - firstX) > minDistance)
+                        {
+                            if (secondX > firstX)
+                            {
+                                setPreviousDate();
+                                loadExpenses();
                             } else {
-                                return false;
+                                setNextDate();
+                                loadExpenses();
                             }
                         }
                         return false;
@@ -133,9 +127,40 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         });
     }
 
-    private void previousDateExpenses() throws ParseException {
-        setDateTextField(DateTimeToolkit.getInstance().
+    private void setPreviousDate()
+    {
+        try
+        {
+            setDateTextField(DateTimeToolkit.getInstance().
                 getPreviousDateForGivenDate(getDateTextFieldValue()));
+        }
+        catch (ParseException exception)
+        {
+            //handle this.
+        }
+    }
+
+    private void setNextDate()
+    {
+        try
+        {
+            setDateTextField(DateTimeToolkit.getInstance().
+                    getNextDateForGivenDate(getDateTextFieldValue()));
+        }
+        catch (ParseException exception)
+        {
+            //handle this.
+        }
+    }
+
+    private void setCurrentDate()
+    {
+        setDateTextField(DateTimeToolkit.getInstance().
+                getCurrentDate());
+    }
+
+    private void loadExpenses()
+    {
         updateExpenditureAdapter(new ExpensesAdapter(view.getContext(),
                 ExpenditureDBAdapter.getInstance().fetchAllExpensesBySpenderDate(
                         view.getContext(),
