@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
 
-import java.security.PublicKey;
-
 public class CategoryAdapter extends CommonItemAdapter<Category>
 {
 
@@ -32,7 +30,7 @@ public class CategoryAdapter extends CommonItemAdapter<Category>
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.image_text_image);
         final TextView nameTextView = (TextView)convertView.findViewById(R.id.image_text_text);
 
-        imageView.setImageResource(category.getCategorySource());
+        imageView.setImageResource(category.getCategoryImageSource());
         nameTextView.setText(category.getCategoryName());
         return convertView;
     }

@@ -9,6 +9,7 @@ import com.codenerdz.expensesmanager.toolkit.DBAdapterTollkit;
 import com.codenerdz.expensesmanager.toolkit.expense.ExpenditureDBToolkit;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ExpenditureDBAdapter
@@ -42,6 +43,7 @@ public class ExpenditureDBAdapter
                 COL_IS_SHARED_EXPENDITURE,expense.isSharedExpenditure());
         contentValues.put(ExpenditureDBToolkit.
                 COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategory());
+        contentValues.put(ExpenditureDBToolkit.COL_EXPENDITURE_DATE,expense.getExpenseDate());
         returnValue = DBAdapterTollkit.getInstance().open(context).insert(ExpenditureDBToolkit.
                 EXPENDITURE_TABLE_NAME,null,contentValues);
         DBAdapterTollkit.getInstance().close();
@@ -74,6 +76,27 @@ public class ExpenditureDBAdapter
                         ExpenditureDBToolkit.COL_SPENDER,
                         ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE
                 };
+    }
+
+    /**
+     * To fetch all expenses according to the given user and date.
+     * @param context context for current view
+     * @param spender responsible spender for retrieving expenses.
+     * @param date related minimum milliseconds of the date and
+     *            maximum milliseconds of the date of retrieving expenses.
+     * @return will be returned retrieved expenses array
+     */
+    public Expense[] fetchAllExpensesBySpenderDate(Context context, Spender spender, long[] date)
+    {
+        Cursor expenseCursor = DBAdapterTollkit.getInstance().
+                open(context).query(ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME,
+                ExpenseTableColumnArray(),ExpenditureDBToolkit.COL_SPENDER+"=? AND "+
+                ExpenditureDBToolkit.COL_EXPENDITURE_DATE+">? AND "+
+                ExpenditureDBToolkit.COL_EXPENDITURE_DATE+"<?",
+                new String[]{spender.getSpenderID()+"",Long.toString(date[0]),
+                        Long.toString(date[1])},null,null,
+                null);
+        return getExpensesArray(expenseCursor);
     }
 
     public Expense[] fetchAllExpensesBySpender(Context context, Spender spender)

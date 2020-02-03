@@ -1,5 +1,7 @@
 package com.codenerdz.expensesmanager.activity.Expense;
 
+import java.util.Date;
+
 public class Expense
 {
     private int expenseID;
@@ -8,6 +10,20 @@ public class Expense
     private int expenditureAmount;
     private boolean isSharedExpenditure;
     private String expenditureDescription;
+    private long expenseDate;
+
+    /**
+     * @return Date value where expend is done.
+     */
+    public long getExpenseDate()
+    {
+        return expenseDate;
+    }
+
+    public void setExpenseDate(long expenseDate)
+    {
+        this.expenseDate = expenseDate;
+    }
 
 
     public int getExpenseID() {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -25,8 +26,10 @@ import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
-import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
+import com.codenerdz.expensesmanager.toolkit.EMConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
+
+import java.util.Calendar;
 
 public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 {
@@ -37,16 +40,50 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     private PaymentMethod selectedPaymentMethod;
     private Button categoryButton;
     private Button paymentMethodButton;
-    private String parentFragment;
+    private Long selectedDate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        parentFragment = NextFragment.getInstance().setParentFragment(this);
         view = inflater.inflate(R.layout.new_expense_layout, container, false);
         setTitle(getResources().getString(R.string.new_expense));
+        updateCalendarEvent();
         return view;
+    }
+
+    /**
+     * will be used to update calendar behavior.
+     */
+    private void updateCalendarEvent()
+    {
+        CalendarView calendarView = (CalendarView)view.findViewById(R.id.calendarView);
+        setSelectedDate();
+        disableFutureDates(calendarView);
+    }
+
+    /**
+     * @param calendarView in new expense fragment. WIll be used to disable future dates.
+     */
+    private void disableFutureDates(CalendarView calendarView)
+    {
+        calendarView.setMaxDate(System.currentTimeMillis());
+    }
+
+    private void setSelectedDate()
+    {
+        CalendarView calendarView = (CalendarView)view.findViewById(R.id.calendarView);
+        selectedDate = calendarView.getDate();
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override public void onSelectedDayChange(@NonNull CalendarView view, int year,
+                                                      int month, int dayOfMonth)
+            {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                selectedDate = calendar.getTimeInMillis();
+            }
+        });
+
     }
 
 
@@ -59,6 +96,10 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
     }
 
+    /**
+     * Methods included in this methods will be invoked when action fired in different fragment
+     * which are relevant to this fragment.
+     */
     private void extractDataFromOtherFragments() {
         addCategoryClickListener();
         categorySelectActionFired();
@@ -114,7 +155,7 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     private void updateCategoryButton()
     {
         categoryButton.setText("");
-        categoryButton.setBackgroundResource(selectedCategory.getCategorySource());
+        categoryButton.setBackgroundResource(selectedCategory.getCategoryImageSource());
     }
 
     private void setSelectedCategory(Category category)
@@ -137,7 +178,10 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(),
-                                new CategoryHomeFragment(),"category home fragement")
+                                NextFragment.getInstance().setArgumentsForNextFragment
+                                        (new CategoryHomeFragment(), EMConstantToolkit.
+                                                EXPENSER_NEW_AS_PARENT_FRAGMENT),
+                                "category home fragement")
                         .addToBackStack("ExpensesNewFragment")
                         .commit();
             }
@@ -161,6 +205,9 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
     }
 
+    /**
+     * This method will be invoked when click the 'add' button in the nex expense fragment.
+     */
     private void addButtonActionPerformed()
     {
         ((Button)view.findViewById(R.id.add_new_expense)).
@@ -173,11 +220,15 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
         });
     }
 
+    /**
+     * Will be create Expense object by collecting data to Expense object attribute from the new
+     * Expense fragment UI elements.
+     * @return Expense object to save in DB.
+     */
     private Expense createNewExpense()
     {
-        EditText textField = (EditText)view.findViewById(R.id.expense_reason_text_field);
-
         Expense expense = new Expense();
+        expense.setExpenseDate(selectedDate);
         expense.setExpenditureCategory(selectedCategory.getCategoryID());
         expense.setExpenditureDescription(((EditText)view.findViewById
                 (R.id.expense_description_textfield)).getText().toString());

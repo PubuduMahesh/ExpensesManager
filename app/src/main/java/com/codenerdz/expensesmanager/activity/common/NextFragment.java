@@ -4,8 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import com.codenerdz.expensesmanager.activity.Expense.ExpensesHomeFragment;
-import com.codenerdz.expensesmanager.toolkit.ExpensesManagerConstantToolkit;
+import com.codenerdz.expensesmanager.toolkit.EMConstantToolkit;
 
 public class NextFragment extends Fragment
 {
@@ -27,7 +26,7 @@ public class NextFragment extends Fragment
     public Fragment setArgumentsForNextFragment(Fragment fragment,String nextFragmentTag)
     {
         Bundle args = new Bundle();
-        args.putString(ExpensesManagerConstantToolkit.PARENT_FRAGMENT,nextFragmentTag);
+        args.putString(EMConstantToolkit.PARENT_FRAGMENT,nextFragmentTag);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,8 +37,8 @@ public class NextFragment extends Fragment
         Bundle arguments = fragment.getArguments();
         if(arguments != null)
         {
-            parentFragment = getArguments().
-                    getString(ExpensesManagerConstantToolkit.PARENT_FRAGMENT);
+            parentFragment = arguments.
+                    getString(EMConstantToolkit.PARENT_FRAGMENT);
         }
         return parentFragment;
     }

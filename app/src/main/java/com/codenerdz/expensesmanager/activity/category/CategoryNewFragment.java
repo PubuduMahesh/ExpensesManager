@@ -11,13 +11,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
 import com.codenerdz.expensesmanager.test.db.CategoryImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
-import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 
 public class CategoryNewFragment extends NewItemFragment<Category>
@@ -70,7 +68,7 @@ public class CategoryNewFragment extends NewItemFragment<Category>
                 if(validateAddNewItemAction(categorySource, categoryName))
                 {
                     category.setCategoryName(categoryName);
-                    category.setCategorySource(categorySource);
+                    category.setCategoryImageSource(categorySource);
                     createNewItem(category);
                     getFragmentManager().popBackStack();
 

@@ -24,6 +24,8 @@ public class ExpenditureDBToolkit
     public static final String COL_IS_SHARED_EXPENDITURE = "isSharedExpenditure";
     public static final String COL_EXPENDITURE_AMOUNT = "amount";
     public static final String COL_EXPENDITURE_CATEGORY = "categoryID";
+    public static final String COL_EXPENDITURE_DATE = "date";
+
 
 
     public String getExpenditureTableQueryString()
@@ -34,7 +36,8 @@ public class ExpenditureDBToolkit
                 COL_SPENDER + " INTEGER, " +
                 COL_EXPENDITURE_AMOUNT + " INTEGER, " +
                 COL_EXPENDITURE_CATEGORY + " INTEGER, " +
-                COL_IS_SHARED_EXPENDITURE + " BOOLEAN );";
+                COL_EXPENDITURE_DATE + " LONG, " +
+                COL_IS_SHARED_EXPENDITURE + " BOOLEAN);";
     }
 
 }
