@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,7 +20,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
+import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethod;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
+import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.DateTimeToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
@@ -44,7 +47,8 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         setTitle(getResources().getString(R.string.expenses));
         setHasOptionsMenu(true);
         spenderSelectedActionFired();
-        handleTouchEvent();
+        handleTouchEvent( (Toolbar)getActivity().findViewById(R.id.toolbar));
+        handleTouchEvent(view);
         return view;
     }
 
@@ -99,7 +103,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
      * return true, if swap left,
      * return false, if swap right.
      */
-    private void handleTouchEvent()
+    private void handleTouchEvent(View view)
     {
         view.setOnTouchListener(new View.OnTouchListener(){
             @Override public boolean onTouch(View v, MotionEvent event) {

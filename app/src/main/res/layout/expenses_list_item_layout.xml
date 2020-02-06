@@ -18,6 +18,9 @@
 
         <EditText
             android:id="@+id/expense_reason_text_field"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_width="265dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
@@ -28,6 +31,9 @@
             android:layout_marginBottom="0dp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:gravity="left" />
     </LinearLayout>
 </LinearLayout>
