@@ -33,6 +33,17 @@
             android:textSize="18sp"
             android:importantForAutofill="no" />
 
+        <Button
+            android:id="@+id/expenses_edit"
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:inputType="date"
+            android:textSize="18sp"
+            android:text="edit"
+            android:importantForAutofill="no" />
+
     </LinearLayout>
 
     <LinearLayout
