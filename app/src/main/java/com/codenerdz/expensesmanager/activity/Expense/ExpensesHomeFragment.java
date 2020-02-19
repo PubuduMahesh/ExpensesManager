@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,18 +18,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethod;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
+import com.codenerdz.expensesmanager.model.ExpensesViewModel;
 import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.DateTimeToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 import java.text.ParseException;
+import java.util.List;
 
 public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
 {
@@ -37,19 +43,49 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     private Spender selectedSpender;
     private float firstX;
     private int minDistance;
+    private ExpensesViewModel expensesViewModel;
+    private Button deleteButton;
+    private Button editButton;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        expensesViewModel = ViewModelProviders.of(getActivity()).get(ExpensesViewModel.class);
+        final Observer<List<Expense>> expenseObserver = listUpdateLisner();
+        expensesViewModel.getExpensesList().observe(this,expenseObserver);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.expenses_home_layout,container,false);
+        editDeleteButtonHandler();
         expensesListView = (ListView) view.findViewById(R.id.expenses_list_view);
         setTitle(getResources().getString(R.string.expenses));
         setHasOptionsMenu(true);
         spenderSelectedActionFired();
+        //add swap functionality to toolbar
         handleTouchEvent( (Toolbar)getActivity().findViewById(R.id.toolbar));
+        //add swapping functionality to expense home screen
         handleTouchEvent(view);
         return view;
+    }
+
+    private void editDeleteButtonHandler()
+    {
+        deleteButton = (Button)view.findViewById(R.id.expenses_delete);
+        editButton = (Button) view.findViewById(R.id.expenses_edit);
+        deleteButton.setEnabled(false);
+        editButton.setEnabled(false);
     }
 
     @Override
@@ -194,5 +230,27 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         final SpenderExpenseViewModel<Spender> modelSpender =
                 ViewModelProviders.of(getActivity()).get(SpenderExpenseViewModel.class);
         setSelectedSpender(modelSpender.getSelectedItem());
+    }
+
+    private Observer<List<Expense>> listUpdateLisner() {
+        return new Observer<List<Expense>>() {
+            @Override
+            public void onChanged(List<Expense> expensesList) {
+                if(expensesList.size()>0)
+                {
+                    deleteButton.setEnabled(true);
+                    editButton.setEnabled(true);
+                    if(expensesList.size()>1)
+                    {
+                        editButton.setEnabled(false);
+                    }
+                }
+                else
+                {
+                    deleteButton.setEnabled(false);
+                    editButton.setEnabled(false);
+                }
+            }
+        };
     }
 }

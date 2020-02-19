@@ -36,4 +36,6 @@
     <string name="individual">Individual</string>
     <string name="shared">Shared</string>
     <string name="new_expense">New Expense</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

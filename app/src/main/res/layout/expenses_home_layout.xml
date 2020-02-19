@@ -19,7 +19,7 @@
             android:gravity="center"
             android:inputType="date"
             android:textSize="18sp"
-            android:text="delete"
+            android:text="@string/delete"
             android:importantForAutofill="no" />
 
         <EditText
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:inputType="date"
             android:textSize="18sp"
-            android:text="edit"
+            android:text="@string/edit"
             android:importantForAutofill="no" />
 
     </LinearLayout>

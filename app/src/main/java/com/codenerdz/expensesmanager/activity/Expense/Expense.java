@@ -11,6 +11,17 @@ public class Expense
     private boolean isSharedExpenditure;
     private String expenditureDescription;
     private long expenseDate;
+    private boolean isSelectedInList;
+
+    public boolean isSelectedInList()
+    {
+        return isSelectedInList;
+    }
+
+    public void setSelectedInList(boolean selectedInList)
+    {
+        isSelectedInList = selectedInList;
+    }
 
     /**
      * @return Date value where expend is done.

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 public class SpenderExpenseViewModel<Item> extends ViewModel
 {
     private final MutableLiveData<Item> selected = new MutableLiveData<Item>();
-    public void selectItem(Item item)
+    public void selectedItem(Item item)
     {
         selected.setValue(item);
     }

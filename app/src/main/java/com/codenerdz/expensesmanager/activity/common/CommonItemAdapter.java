@@ -3,14 +3,19 @@ package com.codenerdz.expensesmanager.activity.common;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 
-public abstract class CommonItemAdapter <T> extends BaseAdapter
+import com.codenerdz.expensesmanager.R;
+
+import java.util.Arrays;
+
+public abstract class CommonItemAdapter <T> extends ArrayAdapter<T>
 {
     public Context context;
     public T[] items;
     public CommonItemAdapter(Context context, T[] items)
     {
+        super(context, R.layout.expenses_list_item_layout, Arrays.asList(items));
         this.context = context;
         this.items = items;
     }
@@ -28,7 +33,7 @@ public abstract class CommonItemAdapter <T> extends BaseAdapter
     }
 
     @Override
-    public Object getItem(int position) {
+    public T getItem(int position) {
         return items[position];
     }
 

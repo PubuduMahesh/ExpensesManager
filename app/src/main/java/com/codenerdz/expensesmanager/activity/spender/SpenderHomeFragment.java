@@ -78,7 +78,7 @@ public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 
-                spenderViewmodel.selectItem((Spender)gridView.getItemAtPosition(position));
+                spenderViewmodel.selectedItem((Spender)gridView.getItemAtPosition(position));
                 openExpenseHomeFragment();
             }
         });
