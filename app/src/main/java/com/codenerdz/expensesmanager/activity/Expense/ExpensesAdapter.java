@@ -57,9 +57,10 @@ public class ExpensesAdapter extends CommonItemAdapter <Expense>
         checkBox.setOnClickListener(new View.OnClickListener(){
 
             @Override public void onClick(View v) {
-                ExpensesViewModel model = ViewModelProviders.of((FragmentActivity) context).get(ExpensesViewModel.class);
+                ExpensesViewModel model = ViewModelProviders.of((FragmentActivity) context).
+                        get(ExpensesViewModel.class);
                 expense.setSelectedInList(checkBox.isSelected()?true:false);
-                model.updateExpensesInList(possition,expense);
+                model.updateExpensesInList(expense);
             }
         });
     }

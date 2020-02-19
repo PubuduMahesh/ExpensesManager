@@ -23,11 +23,16 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="4a909d1c-f001-4ab0-9e0c-49aa974d7b07">
+        <schema name="main" object-types="column, table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4a909d1c-f001-4ab0-9e0c-49aa974d7b07">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[SELECT amount, categoryID, description, _id, spender, isSharedExpenditure,date FROM tbl_expenditure WHERE spender=1 AND date>1580668200000 AND date<1580754599000]]></console>
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[--SELECT amount, categoryID, description, _id, spender, isSharedExpenditure,date FROM tbl_expenditure
+DELETE FROM tbl_expenditure WHERE _id in(1,2,3)]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

@@ -3,13 +3,14 @@ package com.codenerdz.expensesmanager.activity.Expense;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 
 import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.toolkit.DBAdapterTollkit;
 import com.codenerdz.expensesmanager.toolkit.expense.ExpenditureDBToolkit;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 public class ExpenditureDBAdapter
@@ -118,20 +119,48 @@ public class ExpenditureDBAdapter
             {
                 Expense expense  = new Expense();
                 expense.setExpenseID
-                        (cursor.getInt(cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_ID)));
+                        (cursor.getInt(cursor.getColumnIndex(
+                                ExpenditureDBToolkit.COL_EXPENDITURE_ID)));
                 expense.setExpenditureDescription
                         (cursor.getString
-                                (cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION)));
+                                (cursor.getColumnIndex(
+                                        ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION)));
                 expense.setExpenditureAmount
                         (cursor.getInt
-                                (cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT)));
-                expense.setExpenditureCategory(cursor.getInt(cursor.getColumnIndex(ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY)));
-                expense.setExpenser(cursor.getInt(cursor.getColumnIndex(ExpenditureDBToolkit.COL_SPENDER)));
+                                (cursor.getColumnIndex(
+                                        ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT)));
+                expense.setExpenditureCategory(cursor.getInt(cursor.getColumnIndex(
+                        ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY)));
+                expense.setExpenser(cursor.getInt(cursor.getColumnIndex(
+                        ExpenditureDBToolkit.COL_SPENDER)));
                 expensesArrayList.add(expense);
             }
         }
         Expense[] expensesArray = new Expense[expensesArrayList.size()];
         return expensesArrayList.toArray(expensesArray);
+    }
+
+    public void deleteSelectedExpenses(Context context, List<Expense> expenseList)
+    {
+        createDeletingIDList(expenseList);
+        DBAdapterTollkit.getInstance().open(context).delete(
+                ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME, createWhereClauseForDeleteItem(
+                        expenseList.size()),createDeletingIDList(expenseList));
+    }
+
+    private String[] createDeletingIDList(List<Expense> expenseList) {
+        List<String> idList = new ArrayList<>();
+        for(Expense expense : expenseList)
+        {
+            idList.add(Integer.toString(expense.getExpenseID()));
+        }
+        return idList.toArray(new String[expenseList.size()]);
+    }
+
+    private String createWhereClauseForDeleteItem(int size)
+    {
+        return  String.format(ExpenditureDBToolkit.COL_EXPENDITURE_ID + " IN (%s)", new Object[]{
+                TextUtils.join(",", Collections.nCopies(size, "?")) });
     }
 
 

@@ -18,8 +18,7 @@ public class ExpensesViewModel extends ViewModel
     private MutableLiveData<List<Expense>> mutableLiveExpensesData = new MutableLiveData<>();
     private List<Expense> expensesList = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void updateExpensesInList(int possition, Expense expense)
+    public void updateExpensesInList(Expense expense)
     {
         for(Expense item:expensesList)
         {

@@ -8,9 +8,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,16 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
-import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethod;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.ExpensesViewModel;
-import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.DateTimeToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
@@ -46,21 +41,15 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     private ExpensesViewModel expensesViewModel;
     private Button deleteButton;
     private Button editButton;
+    private List<Expense> checkedExpenses;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         expensesViewModel = ViewModelProviders.of(getActivity()).get(ExpensesViewModel.class);
-        final Observer<List<Expense>> expenseObserver = listUpdateLisner();
+        final Observer<List<Expense>> expenseObserver = listUpdateListner();
         expensesViewModel.getExpensesList().observe(this,expenseObserver);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -86,6 +75,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         editButton = (Button) view.findViewById(R.id.expenses_edit);
         deleteButton.setEnabled(false);
         editButton.setEnabled(false);
+        deleteButtonActionPerformed();
     }
 
     @Override
@@ -232,15 +222,16 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         setSelectedSpender(modelSpender.getSelectedItem());
     }
 
-    private Observer<List<Expense>> listUpdateLisner() {
+    private Observer<List<Expense>> listUpdateListner() {
         return new Observer<List<Expense>>() {
             @Override
             public void onChanged(List<Expense> expensesList) {
-                if(expensesList.size()>0)
+                checkedExpenses = expensesList;
+                if(checkedExpenses.size()>0)
                 {
                     deleteButton.setEnabled(true);
                     editButton.setEnabled(true);
-                    if(expensesList.size()>1)
+                    if(checkedExpenses.size()>1)
                     {
                         editButton.setEnabled(false);
                     }
@@ -252,5 +243,20 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                 }
             }
         };
+    }
+
+    private void editButtonActionPerformed()
+    {
+
+    }
+
+    private void deleteButtonActionPerformed()
+    {
+        deleteButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override public void onClick(View v) {
+                ExpenditureDBAdapter.getInstance().deleteSelectedExpenses(view.getContext(),checkedExpenses);
+            }
+        });
     }
 }
