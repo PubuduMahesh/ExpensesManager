@@ -45,9 +45,24 @@ public class ExpenditureDBAdapter
         contentValues.put(ExpenditureDBToolkit.
                 COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategory());
         contentValues.put(ExpenditureDBToolkit.COL_EXPENDITURE_DATE,expense.getExpenseDate());
+        returnValue = addOrUpdateExpense(context, contentValues,expense);
+        DBAdapterTollkit.getInstance().close();
+        return returnValue;
+    }
+
+    private long addOrUpdateExpense(Context context, ContentValues contentValues,Expense expense) {
+        long returnValue;
+        if(expense.getExpenseID() == 0)
+        {
         returnValue = DBAdapterTollkit.getInstance().open(context).insert(ExpenditureDBToolkit.
                 EXPENDITURE_TABLE_NAME,null,contentValues);
-        DBAdapterTollkit.getInstance().close();
+        }
+        else
+        {
+            returnValue = DBAdapterTollkit.getInstance().open(context).update(ExpenditureDBToolkit.
+                    EXPENDITURE_TABLE_NAME,contentValues,createWhereClauseForUpdateItemList(),
+                    new String[]{Integer.toString(expense.getExpenseID())});
+        }
         return returnValue;
     }
 
@@ -144,7 +159,7 @@ public class ExpenditureDBAdapter
     {
         createDeletingIDList(expenseList);
         DBAdapterTollkit.getInstance().open(context).delete(
-                ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME, createWhereClauseForDeleteItem(
+                ExpenditureDBToolkit.EXPENDITURE_TABLE_NAME, createWhereClauseForDeleteItemList(
                         expenseList.size()),createDeletingIDList(expenseList));
     }
 
@@ -157,10 +172,15 @@ public class ExpenditureDBAdapter
         return idList.toArray(new String[expenseList.size()]);
     }
 
-    private String createWhereClauseForDeleteItem(int size)
+    private String createWhereClauseForDeleteItemList(int size)
     {
         return  String.format(ExpenditureDBToolkit.COL_EXPENDITURE_ID + " IN (%s)", new Object[]{
                 TextUtils.join(",", Collections.nCopies(size, "?")) });
+    }
+
+    private String createWhereClauseForUpdateItemList()
+    {
+        return ExpenditureDBToolkit.COL_EXPENDITURE_ID + " =? ";
     }
 
 

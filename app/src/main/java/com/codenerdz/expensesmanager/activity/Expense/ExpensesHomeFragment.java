@@ -1,5 +1,7 @@
 package com.codenerdz.expensesmanager.activity.Expense;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.CustomAllertDialog;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.ExpensesViewModel;
@@ -57,7 +60,6 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                              ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.expenses_home_layout,container,false);
-        editDeleteButtonHandler();
         expensesListView = (ListView) view.findViewById(R.id.expenses_list_view);
         setTitle(getResources().getString(R.string.expenses));
         setHasOptionsMenu(true);
@@ -76,6 +78,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         deleteButton.setEnabled(false);
         editButton.setEnabled(false);
         deleteButtonActionPerformed();
+        editButtonActionPerformed();
     }
 
     @Override
@@ -85,6 +88,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         setCurrentDate();
         loadExpenses();
         setDateTextField(DateTimeToolkit.getInstance().getCurrentDate());
+        editDeleteButtonHandler();
     }
 
     private void updateExpenditureAdapter(ExpensesAdapter expenditureAdapter)
@@ -113,7 +117,8 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         {
             case R.id.action_create_new_expense:
                 getFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(),new ExpenseNewFragment(),"new category fragement")
+                        .replace(((ViewGroup)getView().getParent()).getId(),new ExpenseNewFragment()
+                                ,"new category fragement")
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -247,7 +252,16 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
 
     private void editButtonActionPerformed()
     {
+        editButton.setOnClickListener(new View.OnClickListener(){
 
+            @Override public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(),new ExpenseEditFragment()
+                                ,"agement")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     private void deleteButtonActionPerformed()
@@ -255,8 +269,33 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         deleteButton.setOnClickListener(new View.OnClickListener(){
 
             @Override public void onClick(View v) {
-                ExpenditureDBAdapter.getInstance().deleteSelectedExpenses(view.getContext(),checkedExpenses);
+                showAlertDialog();
             }
         });
     }
+
+    private void showAlertDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setMessage("Are you sure,You wanted to make decision");
+                alertDialogBuilder.setPositiveButton("yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                ExpenditureDBAdapter.getInstance().deleteSelectedExpenses(view.getContext(),
+                                        checkedExpenses);
+                                loadExpenses();
+                            }
+                        });
+
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.out.println("test2");
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }
