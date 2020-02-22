@@ -2,9 +2,6 @@ package com.codenerdz.expensesmanager.test.db;
 
 import com.codenerdz.expensesmanager.activity.Expense.Expense;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ExpnsesList
 {
     private static class SingeltonHolder
@@ -27,7 +24,7 @@ public class ExpnsesList
         expense1.setSharedExpenditure(true);
         expense1.setExpenditureAmount(1000);
         expense1.setExpenditureDescription("Keels");
-        expense1.setExpenditureCategory(1);
+        expense1.setExpenditureCategoryID(1);
         expense1.setExpenser(2);
         Expense[] expensesArray = {expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1,expense1};
         return expensesArray;

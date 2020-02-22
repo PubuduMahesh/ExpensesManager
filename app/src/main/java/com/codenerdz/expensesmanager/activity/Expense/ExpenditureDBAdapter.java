@@ -43,7 +43,9 @@ public class ExpenditureDBAdapter
         contentValues.put(ExpenditureDBToolkit.
                 COL_IS_SHARED_EXPENDITURE,expense.isSharedExpenditure());
         contentValues.put(ExpenditureDBToolkit.
-                COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategory());
+                COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategoryID());
+        contentValues.put(ExpenditureDBToolkit.
+                COL_EXPENDITURE_PAYMENT_METHOD,expense.getExpenditurePaymentMethodID());
         contentValues.put(ExpenditureDBToolkit.COL_EXPENDITURE_DATE,expense.getExpenseDate());
         returnValue = addOrUpdateExpense(context, contentValues,expense);
         DBAdapterTollkit.getInstance().close();
@@ -52,13 +54,15 @@ public class ExpenditureDBAdapter
 
     private long addOrUpdateExpense(Context context, ContentValues contentValues,Expense expense) {
         long returnValue;
-        if(expense.getExpenseID() == 0)
+        if(expense.getExpenseID() == -1)
         {
         returnValue = DBAdapterTollkit.getInstance().open(context).insert(ExpenditureDBToolkit.
                 EXPENDITURE_TABLE_NAME,null,contentValues);
         }
         else
         {
+            contentValues.put(ExpenditureDBToolkit.
+                    COL_EXPENDITURE_ID,String.valueOf(expense.getExpenseID()));
             returnValue = DBAdapterTollkit.getInstance().open(context).update(ExpenditureDBToolkit.
                     EXPENDITURE_TABLE_NAME,contentValues,createWhereClauseForUpdateItemList(),
                     new String[]{Integer.toString(expense.getExpenseID())});
@@ -90,7 +94,9 @@ public class ExpenditureDBAdapter
                         ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION,
                         ExpenditureDBToolkit.COL_EXPENDITURE_ID,
                         ExpenditureDBToolkit.COL_SPENDER,
-                        ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE
+                        ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE,
+                        ExpenditureDBToolkit.COL_EXPENDITURE_PAYMENT_METHOD,
+                        ExpenditureDBToolkit.COL_EXPENDITURE_DATE
                 };
     }
 
@@ -144,10 +150,16 @@ public class ExpenditureDBAdapter
                         (cursor.getInt
                                 (cursor.getColumnIndex(
                                         ExpenditureDBToolkit.COL_EXPENDITURE_AMOUNT)));
-                expense.setExpenditureCategory(cursor.getInt(cursor.getColumnIndex(
+                expense.setExpenditureCategoryID(cursor.getInt(cursor.getColumnIndex(
                         ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY)));
                 expense.setExpenser(cursor.getInt(cursor.getColumnIndex(
                         ExpenditureDBToolkit.COL_SPENDER)));
+                expense.setExpenditurePaymentMethodID(cursor.getInt(cursor.getColumnIndex
+                        (ExpenditureDBToolkit.COL_EXPENDITURE_PAYMENT_METHOD)));
+                expense.setExpenseDate(cursor.getLong(cursor.getColumnIndex
+                        (ExpenditureDBToolkit.COL_EXPENDITURE_DATE)));
+                expense.setSharedExpenditure(cursor.getInt(cursor.getColumnIndex
+                        (ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE))==1?true:false);
                 expensesArrayList.add(expense);
             }
         }

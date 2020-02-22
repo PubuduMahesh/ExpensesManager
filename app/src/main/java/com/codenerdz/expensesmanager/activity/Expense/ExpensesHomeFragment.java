@@ -22,7 +22,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.common.CustomAllertDialog;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
 import com.codenerdz.expensesmanager.model.ExpensesViewModel;
@@ -51,7 +50,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     {
         super.onCreate(savedInstanceState);
         expensesViewModel = ViewModelProviders.of(getActivity()).get(ExpensesViewModel.class);
-        final Observer<List<Expense>> expenseObserver = listUpdateListner();
+        final Observer<List<Expense>> expenseObserver = listUpdateListener();
         expensesViewModel.getExpensesList().observe(this,expenseObserver);
     }
 
@@ -148,9 +147,11 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                         {
                             if (secondX > firstX)
                             {
+                                expensesViewModel.clearExpensesList();
                                 setPreviousDate();
                                 loadExpenses();
                             } else {
+                                expensesViewModel.clearExpensesList();
                                 setNextDate();
                                 loadExpenses();
                             }
@@ -227,7 +228,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         setSelectedSpender(modelSpender.getSelectedItem());
     }
 
-    private Observer<List<Expense>> listUpdateListner() {
+    private Observer<List<Expense>> listUpdateListener() {
         return new Observer<List<Expense>>() {
             @Override
             public void onChanged(List<Expense> expensesList) {
@@ -257,7 +258,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
             @Override public void onClick(View v) {
                 getFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(),new ExpenseEditFragment()
-                                ,"agement")
+                                ,"EditExpense")
                         .addToBackStack(null)
                         .commit();
             }
@@ -269,12 +270,12 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
         deleteButton.setOnClickListener(new View.OnClickListener(){
 
             @Override public void onClick(View v) {
-                showAlertDialog();
+                showAlertDialogWhenDeleteExpenses();
             }
         });
     }
 
-    private void showAlertDialog(){
+    private void showAlertDialogWhenDeleteExpenses(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setMessage("Are you sure,You wanted to make decision");
                 alertDialogBuilder.setPositiveButton("yes",
@@ -283,6 +284,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                             public void onClick(DialogInterface arg0, int arg1) {
                                 ExpenditureDBAdapter.getInstance().deleteSelectedExpenses(view.getContext(),
                                         checkedExpenses);
+                                expensesViewModel.clearExpensesList();
                                 loadExpenses();
                             }
                         });

@@ -33,6 +33,18 @@ public class ExpensesViewModel extends ViewModel
         mutableLiveExpensesData.setValue(expensesList);
     }
 
+    public void clearExpensesList()
+    {
+        expensesList.clear();
+        mutableLiveExpensesData.setValue(expensesList);
+    }
+
+    public void removeExpenseFromExpensesList(Expense expense)
+    {
+        expensesList.remove(expense);
+        mutableLiveExpensesData.setValue(expensesList);
+    }
+
     public MutableLiveData<List<Expense>> getExpensesList()
     {
         return mutableLiveExpensesData;

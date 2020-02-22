@@ -23,19 +23,23 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="false" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="684317e9-22b8-4673-963d-14c06f6eed9a">
+        <schema name="main" object-types="view, table" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="4a909d1c-f001-4ab0-9e0c-49aa974d7b07">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[--SELECT amount, categoryID, description, _id, spender, isSharedExpenditure,date FROM tbl_expenditure
-DELETE FROM tbl_expenditure WHERE _id in(1,2,3)]]></console>
+    <connection id="684317e9-22b8-4673-963d-14c06f6eed9a">
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[SELECT * FROM tbl_expenditure
+SELECT * FROM tbl_payment_method]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="4a909d1c-f001-4ab0-9e0c-49aa974d7b07" />
+    <connection id="684317e9-22b8-4673-963d-14c06f6eed9a" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -60,7 +64,7 @@ DELETE FROM tbl_expenditure WHERE _id in(1,2,3)]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="4a909d1c-f001-4ab0-9e0c-49aa974d7b07" active="true">
+      <connection id="684317e9-22b8-4673-963d-14c06f6eed9a" active="true">
         <database>
           <name value="Connection" />
           <description value="" />

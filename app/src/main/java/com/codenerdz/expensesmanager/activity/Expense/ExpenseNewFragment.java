@@ -33,23 +33,39 @@ import java.util.Calendar;
 
 public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 {
-    private View view;
-    private CategoryExpenseViewModel model;
-    private Category selectedCategory;
-    private Spender selectedSpender;
-    private PaymentMethod selectedPaymentMethod;
-    private Button categoryButton;
-    private Button paymentMethodButton;
-    private Long selectedDate;
+    protected View view;
+    protected CategoryExpenseViewModel model;
+    protected Category selectedCategory;
+    protected Spender selectedSpender;
+    protected PaymentMethod selectedPaymentMethod;
+    protected Button categoryButton;
+    protected Button paymentMethodButton;
+    protected Long selectedDate;
+    protected Button submitButton;
+    protected CalendarView calendarView;
+    protected EditText expenditureDescriptionEditText;
+    protected EditText expenditureAmountEditText;
+    protected RadioButton isSharedRadioButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.new_expense_layout, container, false);
+        componentInitializing();
         setTitle(getResources().getString(R.string.new_expense));
         updateCalendarEvent();
         return view;
+    }
+
+    private void componentInitializing()
+    {
+        submitButton = (Button)view.findViewById(R.id.add_new_expense);
+        expenditureDescriptionEditText = ((EditText)view.findViewById
+                (R.id.expense_description_textfield));
+        expenditureAmountEditText = ((EditText)view.findViewById
+                (R.id.expense_value_text_field));
+        isSharedRadioButton = (RadioButton)view.findViewById(R.id.radio_button_public_expense);
     }
 
     /**
@@ -57,7 +73,7 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
      */
     private void updateCalendarEvent()
     {
-        CalendarView calendarView = (CalendarView)view.findViewById(R.id.calendarView);
+        calendarView = (CalendarView)view.findViewById(R.id.calendarView);
         setSelectedDate();
         disableFutureDates(calendarView);
     }
@@ -208,13 +224,13 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     /**
      * This method will be invoked when click the 'add' button in the nex expense fragment.
      */
-    private void addButtonActionPerformed()
+    protected void addButtonActionPerformed()
     {
-        ((Button)view.findViewById(R.id.add_new_expense)).
+        (submitButton).
                 setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExpenditureDBAdapter.getInstance().createExpense(createNewExpense(),getContext());
+                ExpenditureDBAdapter.getInstance().createExpense(createExpenseObjectToSubmit(),getContext());
                 getFragmentManager().popBackStack();
             }
         });
@@ -225,22 +241,23 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
      * Expense fragment UI elements.
      * @return Expense object to save in DB.
      */
-    private Expense createNewExpense()
+    protected Expense createExpenseObjectToSubmit()
     {
         Expense expense = new Expense();
+        expense.setExpenseID(-1);
         expense.setExpenseDate(selectedDate);
-        expense.setExpenditureCategory(selectedCategory.getCategoryID());
-        expense.setExpenditureDescription(((EditText)view.findViewById
-                (R.id.expense_description_textfield)).getText().toString());
-        expense.setExpenditureAmount(Integer.parseInt(((EditText)view.findViewById
-                (R.id.expense_value_text_field)).getText().toString()));
+        expense.setExpenditureCategoryID(selectedCategory.getCategoryID());
+        expense.setExpenditureDescription(expenditureDescriptionEditText.getText().toString());
+        expense.setExpenditureAmount(Integer.parseInt(expenditureAmountEditText.
+                getText().toString()));
         expense.setSharedExpenditure(isSharedExpense());
         expense.setExpenser(selectedSpender.getSpenderID());
+        expense.setExpenditurePaymentMethodID(selectedPaymentMethod.getPaymentMethodID());
         return expense;
     }
 
     private boolean isSharedExpense() {
-        if(((RadioButton)view.findViewById(R.id.radio_button_public_expense)).isChecked())
+        if(isSharedRadioButton.isChecked())
         {
             return true;
         }

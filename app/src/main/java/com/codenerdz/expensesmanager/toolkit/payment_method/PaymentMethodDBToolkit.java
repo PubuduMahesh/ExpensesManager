@@ -22,14 +22,14 @@ public class PaymentMethodDBToolkit
     public static final String COL_PAYMENT_METHOD_ID = "_id";
     public static final String COL_PAYMENT_METHOD_NAME = "paymentMethodName";
     public static final String COL_PAYMENT_METHOD_IMAGE_SOURCE = "paymentMethodImageSource";
-    public static final String COL_PAYMENT_METHOD_IS_SHARED_OPTION = "sharedMethod";
+    public static final String COL_PAYMENT_METHOD_IS_SHARED = "sharedMethod";
 
     public String getPaymentMethodTableQueryString()
     {
         return "CREATE TABLE IF NOT EXISTS " + PAYMENT_METHOD_TABLE_NAME + " ( " +
                 COL_PAYMENT_METHOD_ID + " INTEGER PRIMARY KEY autoincrement, " +
                 COL_PAYMENT_METHOD_NAME + " TEXT, " +
-                COL_PAYMENT_METHOD_IS_SHARED_OPTION + " INTEGER, " +
+                COL_PAYMENT_METHOD_IS_SHARED + " INTEGER, " +
                 COL_PAYMENT_METHOD_IMAGE_SOURCE + " INTEGER );";
     }
 }

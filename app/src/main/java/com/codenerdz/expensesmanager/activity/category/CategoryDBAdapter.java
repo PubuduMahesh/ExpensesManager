@@ -61,6 +61,21 @@ public class CategoryDBAdapter {
         return values;
     }
 
+    public Category fetchCategoryByID(int categoryID, Context context)
+    {
+        Cursor categoryCursor = DBAdapterTollkit.getInstance().open(context)
+                .query(CategoryDBToolkit.CATEGORY_TABLE_NAME,getColumnsList(),
+                        CategoryDBToolkit.COL_CATEGORY_ID+" =?",new String[]
+                                {String.valueOf(categoryID)},null,null,null);
+        if(categoryCursor != null)
+        {
+            categoryCursor.moveToFirst();
+        }
+        DBAdapterTollkit.getInstance().close();
+        return getCategoryObject(categoryCursor);
+
+    }
+
     /**
      * This method will be used to fetch all registered categories from db.
      * @param context android context which is going to access db
@@ -69,12 +84,7 @@ public class CategoryDBAdapter {
     public Category[] fetchAllCategory(Context context)
     {
         Cursor categoryCursor = DBAdapterTollkit.getInstance().
-                open(context).query(CategoryDBToolkit.CATEGORY_TABLE_NAME,new String[]
-                {
-                        CategoryDBToolkit.COL_CATEGORY_ID,
-                        CategoryDBToolkit.COL_CATEGORY_NAME,
-                        CategoryDBToolkit.COL_CATEGORY_IMAGE_SOURCE
-                },
+                open(context).query(CategoryDBToolkit.CATEGORY_TABLE_NAME, getColumnsList(),
                 null,null,null,null,null);
         if(categoryCursor != null)
         {
@@ -83,6 +93,15 @@ public class CategoryDBAdapter {
         DBAdapterTollkit.getInstance().close();
         return getCategoryArray(categoryCursor);
 
+    }
+
+    private String[] getColumnsList() {
+        return new String[]
+        {
+                CategoryDBToolkit.COL_CATEGORY_ID,
+                CategoryDBToolkit.COL_CATEGORY_NAME,
+                CategoryDBToolkit.COL_CATEGORY_IMAGE_SOURCE
+        };
     }
 
     /**

@@ -1,17 +1,24 @@
 package com.codenerdz.expensesmanager.activity.Expense;
 
-import java.util.Date;
-
 public class Expense
 {
     private int expenseID;
     private int expenser;
-    private int expenditureCategory;
+    private int expenditureCategoryID;
+    private int expenditurePaymentMethodID;
     private int expenditureAmount;
     private boolean isSharedExpenditure;
     private String expenditureDescription;
     private long expenseDate;
     private boolean isSelectedInList;
+
+    public int getExpenditurePaymentMethodID() {
+        return expenditurePaymentMethodID;
+    }
+
+    public void setExpenditurePaymentMethodID(int expenditurePaymentMethodID) {
+        this.expenditurePaymentMethodID = expenditurePaymentMethodID;
+    }
 
     public boolean isSelectedInList()
     {
@@ -55,14 +62,14 @@ public class Expense
         this.expenser = expenser;
     }
 
-    public int getExpenditureCategory()
+    public int getExpenditureCategoryID()
     {
-        return expenditureCategory;
+        return expenditureCategoryID;
     }
 
-    public void setExpenditureCategory(int expenditureCategory)
+    public void setExpenditureCategoryID(int expenditureCategoryID)
     {
-        this.expenditureCategory = expenditureCategory;
+        this.expenditureCategoryID = expenditureCategoryID;
     }
 
     public int getExpenditureAmount()
