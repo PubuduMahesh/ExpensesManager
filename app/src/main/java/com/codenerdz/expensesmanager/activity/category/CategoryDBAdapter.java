@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import com.codenerdz.expensesmanager.toolkit.category.CategoryDBToolkit;
 import com.codenerdz.expensesmanager.toolkit.DBAdapterTollkit;
+import com.codenerdz.expensesmanager.toolkit.expense.ExpenditureDBToolkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,5 +141,11 @@ public class CategoryDBAdapter {
                 (cursor.getInt
                         (cursor.getColumnIndex(CategoryDBToolkit.COL_CATEGORY_IMAGE_SOURCE)));
         return category;
+    }
+
+    public void deleteCategoryById(Context context,Category category) {
+        DBAdapterTollkit.getInstance().open(context).delete(
+                CategoryDBToolkit.CATEGORY_TABLE_NAME,CategoryDBToolkit.COL_CATEGORY_ID +
+                        "=?",new String[]{String.valueOf(category.getCategoryID())});
     }
 }

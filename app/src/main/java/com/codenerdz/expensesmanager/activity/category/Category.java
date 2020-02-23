@@ -4,9 +4,9 @@ package com.codenerdz.expensesmanager.activity.category;
  * Model Class for Category.
  */
 public class Category {
-    private String categoryName;
-    private int categoryID;
-    private int categoryImageSource;
+    private String categoryName = "";
+    private int categoryID = -1;
+    private int categoryImageSource = -1;
 
     public Category()
     {

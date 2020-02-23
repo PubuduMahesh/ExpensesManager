@@ -62,10 +62,13 @@ public class ExpenseEditFragment extends ExpenseNewFragment implements ToolbarDe
                 setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ExpenditureDBAdapter.getInstance().
-                                createExpense(ExpenseEditFragment.this.createExpenseObjectToSubmit(),getContext());
-                        getFragmentManager().popBackStack();
-                        expensesViewModel.clearExpensesList();
+                        if(validateExpenseObject())
+                        {
+                            ExpenditureDBAdapter.getInstance().
+                                    createExpense(ExpenseEditFragment.this.createExpenseObjectToSubmit(),getContext());
+                            getFragmentManager().popBackStack();
+                            expensesViewModel.clearExpensesList();
+                        }
                     }
                 });
     }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -233,8 +234,12 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
                 setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExpenditureDBAdapter.getInstance().createExpense(createExpenseObjectToSubmit(),getContext());
-                getFragmentManager().popBackStack();
+                if(validateExpenseObject())
+                {
+                    ExpenditureDBAdapter.getInstance().
+                            createExpense(createExpenseObjectToSubmit(),getContext());
+                    getFragmentManager().popBackStack();
+                }
             }
         });
     }
@@ -257,6 +262,35 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
         expense.setExpenser(selectedSpender.getSpenderID());
         expense.setExpenditurePaymentMethodID(selectedPaymentMethod.getPaymentMethodID());
         return expense;
+    }
+
+    protected boolean validateExpenseObject() {
+        //TODO: add tooltips to this false occasions.
+        if(selectedCategory == null)
+        {
+            Toast.makeText(getContext(),"You should select category.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(selectedPaymentMethod == null)
+        {
+            Toast.makeText(getContext(),"You should select payment method.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(expenditureAmountEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(getContext(),"You should add amount to the expense.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(expenditureDescriptionEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(getContext(),"You should add description.",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private boolean isSharedExpense() {

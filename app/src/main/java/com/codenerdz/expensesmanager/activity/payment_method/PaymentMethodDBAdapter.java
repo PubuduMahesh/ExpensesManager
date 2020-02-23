@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PaymentMethodDBAdapter
 {
-    private static class SingeltonHolder
+    private static class SingletonHolder
     {
         public static PaymentMethodDBAdapter instance = new PaymentMethodDBAdapter();
     }
@@ -24,7 +24,7 @@ public class PaymentMethodDBAdapter
 
     public static PaymentMethodDBAdapter getInstance()
     {
-        return SingeltonHolder.instance;
+        return SingletonHolder.instance;
     }
 
     public long createPaymentMethod(PaymentMethod pm, Context context)
@@ -107,6 +107,13 @@ public class PaymentMethodDBAdapter
                         PaymentMethodDBToolkit.COL_PAYMENT_METHOD_IS_SHARED,
                         PaymentMethodDBToolkit.COL_PAYMENT_METHOD_IMAGE_SOURCE
                 };
+    }
+
+    public void deletePaymentMethodByID(Context context, PaymentMethod paymentMethod) {
+        DBAdapterTollkit.getInstance().open(context).delete(
+                PaymentMethodDBToolkit.PAYMENT_METHOD_TABLE_NAME,PaymentMethodDBToolkit.
+                        COL_PAYMENT_METHOD_ID +"=?",new String[]
+                        {String.valueOf(paymentMethod.getPaymentMethodID())});
     }
 }
 

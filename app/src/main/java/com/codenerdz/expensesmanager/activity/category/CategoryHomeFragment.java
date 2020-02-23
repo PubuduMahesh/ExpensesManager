@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -33,6 +36,9 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
     private View view;
     private CategoryExpenseViewModel<Category> model;
     private String parentFragment;
+    private ActionMode actionMode;
+    private Category selectedCategory;
+    private CategoryAdapter categoryAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,12 +52,65 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
         if(parentFragment!=null && parentFragment.equals(EMConstantToolkit.
                 EXPENSER_NEW_AS_PARENT_FRAGMENT))
         {
-            setSlectedItem();
+            setSelectedItem();
+        }
+        else
+        {
+            setLongClickListener();
         }
         return view;
     }
 
-    private void setSlectedItem()
+    private void setLongClickListener() {
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int position, long arg3) {
+                if(actionMode != null)
+                {
+                    return false;
+                }
+                selectedCategory = (Category)gridView.getItemAtPosition(position);
+                actionMode = ((AppCompatActivity) getActivity()).
+                        startSupportActionMode(actionModeCallback);
+                return false;
+            }
+        });
+    }
+
+    private ActionMode.Callback actionModeCallback = new ActionMode.Callback()
+    {
+
+        @Override public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.item_delete_action,menu);
+            mode.setTitle("delete selected item");
+            return true;
+        }
+
+        @Override public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId())
+            {
+                case R.id.item_delete:
+                        CategoryDBAdapter.getInstance().
+                                deleteCategoryById(getContext(),selectedCategory);
+                        mode.finish();
+                        loadCategory();
+                        return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+        }
+    };
+
+    private void setSelectedItem()
     {
         model = ViewModelProviders.of(getActivity()).get(CategoryExpenseViewModel.class);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,7 +129,11 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
     {
         super.onActivityCreated(savedInstanceState);
 
-        CategoryAdapter categoryAdapter = new CategoryAdapter(view.getContext(),
+        loadCategory();
+    }
+
+    private void loadCategory() {
+        categoryAdapter = new CategoryAdapter(view.getContext(),
                 CategoryDBAdapter.getInstance().fetchAllCategory(view.getContext()));
         gridView.setAdapter(categoryAdapter);
     }
@@ -89,7 +152,8 @@ public class CategoryHomeFragment extends Fragment implements ToolbarDetail {
         {
             case R.id.action_create_new_category:
                 getFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(),new CategoryNewFragment(),"new category fragement")
+                        .replace(((ViewGroup)getView().getParent()).getId(),
+                                new CategoryNewFragment(),"new category fragment")
                         .addToBackStack(null)
                         .commit();
                 break;

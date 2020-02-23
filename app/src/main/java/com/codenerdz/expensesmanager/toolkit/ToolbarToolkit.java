@@ -2,11 +2,9 @@ package com.codenerdz.expensesmanager.toolkit;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.codenerdz.expensesmanager.R;
-
 public class ToolbarToolkit
 {
-    private static class SingeltonHolder
+    private static class SingletonHolder
     {
         public static ToolbarToolkit instance = new ToolbarToolkit();
     }
@@ -18,7 +16,7 @@ public class ToolbarToolkit
 
     public static ToolbarToolkit getInstance()
     {
-        return SingeltonHolder.instance;
+        return SingletonHolder.instance;
     }
 
     public void setTitle(Toolbar toolbar,String title)
