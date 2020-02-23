@@ -213,7 +213,10 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(),
-                                new PaymentMethodHomeFragment(),"payment method home fragement")
+                                NextFragment.getInstance().setArgumentsForNextFragment
+                                (new PaymentMethodHomeFragment(), EMConstantToolkit.
+                                        EXPENSER_NEW_AS_PARENT_FRAGMENT),
+                                "payment method home fragement")
                         .addToBackStack("ExpensesNewFragment")
                         .commit();
             }

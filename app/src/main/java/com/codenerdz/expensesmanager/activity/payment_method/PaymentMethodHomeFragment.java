@@ -17,9 +17,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.NextFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
+import com.codenerdz.expensesmanager.toolkit.EMConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
@@ -28,14 +30,20 @@ public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
     private GridView gridView;
     private View view;
     private PaymentMethodExpenseViewModel<PaymentMethod> model;
+    private String parentFragment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        parentFragment = NextFragment.getInstance().setParentFragment(this);
         view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.menu_payment_method));
         setHasOptionsMenu(true);
-        setSlectedItem();
+        if(parentFragment!=null && parentFragment.equals(EMConstantToolkit.
+                EXPENSER_NEW_AS_PARENT_FRAGMENT))
+        {
+            setSlectedItem();
+        }
         return view;
     }
 
