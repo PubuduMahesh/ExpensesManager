@@ -59,6 +59,7 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
                              ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.expenses_home_layout,container,false);
+        clearExpenseViewModelList();
         expensesListView = (ListView) view.findViewById(R.id.expenses_list_view);
         setTitle(getResources().getString(R.string.expenses));
         setHasOptionsMenu(true);
@@ -93,6 +94,14 @@ public class ExpensesHomeFragment extends Fragment implements ToolbarDetail
     private void updateExpenditureAdapter(ExpensesAdapter expenditureAdapter)
     {
         expensesListView.setAdapter(expenditureAdapter);
+    }
+
+    private void clearExpenseViewModelList()
+    {
+        if(expensesViewModel != null)
+        {
+            expensesViewModel.clearExpensesList();
+        }
     }
 
 
