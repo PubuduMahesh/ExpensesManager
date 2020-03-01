@@ -52,10 +52,13 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.new_expense_layout, container, false);
-        componentInitializing();
-        setTitle(getResources().getString(R.string.new_expense));
-        updateCalendarEvent();
+        if(view == null)
+        {
+            view = inflater.inflate(R.layout.new_expense_layout, container, false);
+            componentInitializing();
+            setTitle(getResources().getString(R.string.new_expense));
+            updateCalendarEvent();
+        }
         return view;
     }
 
@@ -67,6 +70,8 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
         expenditureAmountEditText = ((EditText)view.findViewById
                 (R.id.expense_value_text_field));
         isSharedRadioButton = (RadioButton)view.findViewById(R.id.radio_button_public_expense);
+        categoryButton = (Button)view.findViewById(R.id.add_category);
+        paymentMethodButton = (Button)view.findViewById(R.id.add_payment_method);
     }
 
     /**
@@ -190,7 +195,6 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
     private void addCategoryClickListener()
     {
-        categoryButton = (Button)view.findViewById(R.id.add_category);
         categoryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
@@ -207,7 +211,6 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
     private void addPaymentMethodClickListener()
     {
-        paymentMethodButton = (Button)view.findViewById(R.id.add_payment_method);
         paymentMethodButton.setOnClickListener(new View.OnClickListener(){
 
             @Override

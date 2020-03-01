@@ -1,9 +1,13 @@
 package com.codenerdz.expensesmanager.activity.Expense;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
@@ -23,13 +27,21 @@ public class ExpenseEditFragment extends ExpenseNewFragment implements ToolbarDe
     {
         super.onCreate(savedInstanceState);
         expensesViewModel = ViewModelProviders.of(getActivity()).get(ExpensesViewModel.class);
-        setTitle(getResources().getString(R.string.edit_expense));
 
     }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState)
+    {
+        super.onCreateView(inflater,container,savedInstanceState);
+        setComponentValue();
+        return view;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        setComponentValue();
     }
 
     @Override

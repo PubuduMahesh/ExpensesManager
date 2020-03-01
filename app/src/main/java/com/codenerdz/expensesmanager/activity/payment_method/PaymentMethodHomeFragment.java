@@ -117,7 +117,7 @@ public class PaymentMethodHomeFragment extends Fragment implements ToolbarDetail
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 PaymentMethod paymentMethod = (PaymentMethod) gridView.getItemAtPosition(position);
                 model.selectItem(paymentMethod);
-                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         });
     }
