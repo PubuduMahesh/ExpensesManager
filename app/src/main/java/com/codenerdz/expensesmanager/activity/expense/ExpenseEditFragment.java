@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.activity.Expense;
+package com.codenerdz.expensesmanager.activity.expense;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;

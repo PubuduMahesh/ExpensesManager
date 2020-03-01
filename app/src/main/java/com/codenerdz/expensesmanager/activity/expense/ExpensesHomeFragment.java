@@ -1,4 +1,4 @@
-package com.codenerdz.expensesmanager.activity.Expense;
+package com.codenerdz.expensesmanager.activity.expense;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

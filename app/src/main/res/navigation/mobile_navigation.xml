@@ -23,4 +23,9 @@
         android:label="@string/menu_payment_method"
         android:layout="@layout/fragment_payment_method_layout"/>
 
+    <fragment
+        android:id="@+id/nav_analysor"
+        android:name="com.codenerdz.expensesmanager.activity.analysor.AnalysorHomeFragment"
+        android:label="@string/menu_analysor"
+        android:layout="@layout/fragment_analysor_option_layout"/>
 </navigation>

@@ -39,4 +39,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="edit_expense">Edit Expense</string>
+    <string name="menu_analysor">Analysor</string>
 </resources>

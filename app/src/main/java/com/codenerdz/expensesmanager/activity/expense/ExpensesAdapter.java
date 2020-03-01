@@ -1,24 +1,17 @@
-package com.codenerdz.expensesmanager.activity.Expense;
+package com.codenerdz.expensesmanager.activity.expense;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.StateSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.common.CommonItemAdapter;
-import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.ExpensesViewModel;
 
 public class ExpensesAdapter extends CommonItemAdapter <Expense>

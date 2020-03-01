@@ -1,6 +1,6 @@
 package com.codenerdz.expensesmanager.test.db;
 
-import com.codenerdz.expensesmanager.activity.Expense.Expense;
+import com.codenerdz.expensesmanager.activity.expense.Expense;
 
 public class ExpnsesList
 {

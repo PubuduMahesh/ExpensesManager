@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.Expense.ExpensesHomeFragment;
+import com.codenerdz.expensesmanager.activity.expense.ExpensesHomeFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;

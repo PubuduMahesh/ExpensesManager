@@ -1,17 +1,12 @@
 package com.codenerdz.expensesmanager.model;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.codenerdz.expensesmanager.activity.Expense.Expense;
+import com.codenerdz.expensesmanager.activity.expense.Expense;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public class ExpensesViewModel extends ViewModel
 {
