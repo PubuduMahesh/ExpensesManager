@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/spender_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="Spenders" />
+
+            <Spinner
+                android:id="@+id/spender_spinner"
+                android:layout_width="65dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/spender_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Add"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/days_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="Days" />
+
+            <Spinner
+                android:id="@+id/days_spinner"
+                android:layout_width="65dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/days_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Add"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <CheckBox
+                android:id="@+id/category_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="Category" />
+
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="65dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/analyse_category_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Add"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/payment_method_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:text="PaymentMethod" />
+
+            <Spinner
+                android:id="@+id/payment_method_spinner"
+                android:layout_width="65dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/analyse_payment_method_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Add"/>
+        </TableRow>
+    </TableLayout>
 </LinearLayout>
