@@ -4,6 +4,7 @@ public class Expense
 {
     private int expenseID;
     private int expenser;
+    private int sponsor;
     private int expenditureCategoryID;
     private int expenditurePaymentMethodID;
     private int expenditureAmount;
@@ -100,5 +101,13 @@ public class Expense
     public void setExpenditureDescription(String expenditureDescription)
     {
         this.expenditureDescription = expenditureDescription;
+    }
+
+    public void setSponsor(int sponsor) {
+        this.sponsor = sponsor;
+    }
+
+    public int getSponsor() {
+        return sponsor;
     }
 }

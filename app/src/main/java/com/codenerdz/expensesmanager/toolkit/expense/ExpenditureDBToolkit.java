@@ -22,6 +22,7 @@ public class ExpenditureDBToolkit
     public static final String COL_EXPENDITURE_ID = "_id";
     public static final String COL_EXPENDITURE_DESCRIPTION = "description";
     public static final String COL_SPENDER = "spender";
+    public static final String COL_SPONSOR = "sponsor";
     public static final String COL_IS_SHARED_EXPENDITURE = "isSharedExpenditure";
     public static final String COL_EXPENDITURE_AMOUNT = "amount";
     public static final String COL_EXPENDITURE_CATEGORY = "categoryID";
@@ -37,6 +38,7 @@ public class ExpenditureDBToolkit
                 COL_EXPENDITURE_DESCRIPTION + " TEXT, " +
                 COL_SPENDER + " INTEGER, " +
                 COL_EXPENDITURE_AMOUNT + " INTEGER, " +
+                COL_SPONSOR + " INTEGER, " +
                 COL_EXPENDITURE_CATEGORY + " INTEGER, " +
                 COL_EXPENDITURE_PAYMENT_METHOD + " INTEGER, " +
                 COL_EXPENDITURE_DATE + " LONG, " +

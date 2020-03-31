@@ -41,6 +41,8 @@ public class ExpenditureDBAdapter
         contentValues.put(ExpenditureDBToolkit.
                 COL_SPENDER,expense.getExpenser());
         contentValues.put(ExpenditureDBToolkit.
+                COL_SPONSOR,expense.getSponsor());
+        contentValues.put(ExpenditureDBToolkit.
                 COL_IS_SHARED_EXPENDITURE,expense.isSharedExpenditure());
         contentValues.put(ExpenditureDBToolkit.
                 COL_EXPENDITURE_CATEGORY,expense.getExpenditureCategoryID());
@@ -94,6 +96,7 @@ public class ExpenditureDBAdapter
                         ExpenditureDBToolkit.COL_EXPENDITURE_DESCRIPTION,
                         ExpenditureDBToolkit.COL_EXPENDITURE_ID,
                         ExpenditureDBToolkit.COL_SPENDER,
+                        ExpenditureDBToolkit.COL_SPONSOR,
                         ExpenditureDBToolkit.COL_IS_SHARED_EXPENDITURE,
                         ExpenditureDBToolkit.COL_EXPENDITURE_PAYMENT_METHOD,
                         ExpenditureDBToolkit.COL_EXPENDITURE_DATE
@@ -154,6 +157,8 @@ public class ExpenditureDBAdapter
                         ExpenditureDBToolkit.COL_EXPENDITURE_CATEGORY)));
                 expense.setExpenser(cursor.getInt(cursor.getColumnIndex(
                         ExpenditureDBToolkit.COL_SPENDER)));
+                expense.setSponsor(cursor.getInt(cursor.getColumnIndex(
+                        ExpenditureDBToolkit.COL_SPONSOR)));
                 expense.setExpenditurePaymentMethodID(cursor.getInt(cursor.getColumnIndex
                         (ExpenditureDBToolkit.COL_EXPENDITURE_PAYMENT_METHOD)));
                 expense.setExpenseDate(cursor.getLong(cursor.getColumnIndex

@@ -17,20 +17,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.activity.common.NextFragment;
 import com.codenerdz.expensesmanager.activity.expense.ExpensesHomeFragment;
 import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
+import com.codenerdz.expensesmanager.model.SponsorExpenseViewModel;
+import com.codenerdz.expensesmanager.toolkit.EMConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
 public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
 
     private GridView gridView;
     private View view;
-    private SpenderExpenseViewModel<Spender> spenderViewmodel;
+    private String parentFragment;
+    private SpenderExpenseViewModel<Spender> spenderViewModel;
+    private SponsorExpenseViewModel<Spender> sponsorViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        parentFragment = NextFragment.getInstance().setParentFragment(this);
         view = inflater.inflate(R.layout.content_grid_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.menu_spender));
@@ -73,13 +79,22 @@ public class SpenderHomeFragment extends Fragment implements ToolbarDetail {
 
     private void spenderClickListener()
     {
-        spenderViewmodel = ViewModelProviders.of(getActivity()).get(SpenderExpenseViewModel .class);
+        spenderViewModel = ViewModelProviders.of(getActivity()).get(SpenderExpenseViewModel .class);
+        sponsorViewModel = ViewModelProviders.of(getActivity()).get(SponsorExpenseViewModel.class);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
-                spenderViewmodel.selectedItem((Spender)gridView.getItemAtPosition(position));
-                openExpenseHomeFragment();
+                if(parentFragment!=null && parentFragment.equals(EMConstantToolkit.
+                        EXPENSER_NEW_AS_PARENT_FRAGMENT))
+                {
+                    sponsorViewModel.selectedItem((Spender)gridView.getItemAtPosition(position));
+                    getFragmentManager().popBackStackImmediate();
+                }
+                else
+                {
+                    spenderViewModel.selectedItem((Spender)gridView.getItemAtPosition(position));
+                    openExpenseHomeFragment();
+                }
             }
         });
     }

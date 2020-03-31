@@ -24,9 +24,11 @@ import com.codenerdz.expensesmanager.activity.common.ToolbarDetail;
 import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethod;
 import com.codenerdz.expensesmanager.activity.payment_method.PaymentMethodHomeFragment;
 import com.codenerdz.expensesmanager.activity.spender.Spender;
+import com.codenerdz.expensesmanager.activity.spender.SpenderHomeFragment;
 import com.codenerdz.expensesmanager.model.CategoryExpenseViewModel;
 import com.codenerdz.expensesmanager.model.PaymentMethodExpenseViewModel;
 import com.codenerdz.expensesmanager.model.SpenderExpenseViewModel;
+import com.codenerdz.expensesmanager.model.SponsorExpenseViewModel;
 import com.codenerdz.expensesmanager.toolkit.EMConstantToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
@@ -38,8 +40,10 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     protected CategoryExpenseViewModel model;
     protected Category selectedCategory;
     protected Spender selectedSpender;
+    protected Spender selectedSponsor;
     protected PaymentMethod selectedPaymentMethod;
     protected Button categoryButton;
+    protected Button sponsorButton;
     protected Button paymentMethodButton;
     protected Long selectedDate;
     protected Button submitButton;
@@ -71,6 +75,7 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
                 (R.id.expense_value_text_field));
         isSharedRadioButton = (RadioButton)view.findViewById(R.id.radio_button_public_expense);
         categoryButton = (Button)view.findViewById(R.id.add_category);
+        sponsorButton = (Button)view.findViewById(R.id.add_sponsor);
         paymentMethodButton = (Button)view.findViewById(R.id.add_payment_method);
     }
 
@@ -110,12 +115,16 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
 
     @Override
+    public void startPostponedEnterTransition() {
+        super.startPostponedEnterTransition();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
         extractDataFromOtherFragments();
         addButtonActionPerformed();
-
     }
 
     /**
@@ -126,8 +135,10 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
         addCategoryClickListener();
         categorySelectActionFired();
         addPaymentMethodClickListener();
+        addSponsorClickListener();
         paymentMethodSelectActionFiered();
         spenderSelectedActionFired();
+        sponsorSelectedActionFired();
     }
 
     private void categorySelectActionFired()
@@ -149,9 +160,26 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
         });
     }
 
+    private void sponsorSelectedActionFired()
+    {
+        final SponsorExpenseViewModel<Spender> modelSponsor =
+                ViewModelProviders.of(getActivity()).get(SponsorExpenseViewModel.class);
+        modelSponsor.getSelected().observe(this, item -> {
+            setSelectedSponsor(modelSponsor.getSelectedItem());
+        });
+    }
+
+
     private void setSelectedSpender(Spender spender)
     {
         selectedSpender = spender;
+        setSelectedSponsor(spender);
+    }
+
+    private void setSelectedSponsor(Spender sponsor)
+    {
+        selectedSponsor = sponsor;
+        updateSponsorButton();
     }
 
     private void paymentMethodSelectActionFiered() {
@@ -178,6 +206,12 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
     {
         categoryButton.setText("");
         categoryButton.setBackgroundResource(selectedCategory.getCategoryImageSource());
+    }
+
+    private void updateSponsorButton()
+    {
+        sponsorButton.setText("");
+        sponsorButton.setBackgroundResource(selectedSponsor.getSpenderImageSource());
     }
 
     private void setSelectedCategory(Category category)
@@ -228,6 +262,24 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
 
     }
 
+    private void addSponsorClickListener()
+    {
+        sponsorButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(),
+                                NextFragment.getInstance().setArgumentsForNextFragment
+                                        (new SpenderHomeFragment(), EMConstantToolkit.
+                                                EXPENSER_NEW_AS_PARENT_FRAGMENT),
+                                "spender home fragement")
+                        .addToBackStack("ExpensesNewFragment")
+                        .commit();
+            }
+        });
+    }
+
     /**
      * This method will be invoked when click the 'add' button in the nex expense fragment.
      */
@@ -263,6 +315,7 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
                 getText().toString()));
         expense.setSharedExpenditure(isSharedExpense());
         expense.setExpenser(selectedSpender.getSpenderID());
+        expense.setSponsor(selectedSponsor.getSpenderID());
         expense.setExpenditurePaymentMethodID(selectedPaymentMethod.getPaymentMethodID());
         return expense;
     }
@@ -302,7 +355,6 @@ public class ExpenseNewFragment extends Fragment implements ToolbarDetail
             return true;
         }
         return false;
-
     }
 
 }
