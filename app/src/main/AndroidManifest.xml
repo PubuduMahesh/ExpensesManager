@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.codenerdz.expensesmanager">
 
-    <uses-sdk tools:overrideLibrary="com.anychart"/>
+    <uses-sdk tools:overrideLibrary="com.highsoft.highcharts"/>
 
     <application
         android:allowBackup="true"
