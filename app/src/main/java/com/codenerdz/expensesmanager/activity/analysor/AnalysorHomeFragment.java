@@ -16,18 +16,17 @@ import com.highsoft.highcharts.Common.HIChartsClasses.HIDataLabels;
 import com.highsoft.highcharts.Common.HIChartsClasses.HIFilter;
 import com.highsoft.highcharts.Common.HIChartsClasses.HILevels;
 import com.highsoft.highcharts.Common.HIChartsClasses.HIOptions;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIResetZoomButton;
 import com.highsoft.highcharts.Common.HIChartsClasses.HISubtitle;
 import com.highsoft.highcharts.Common.HIChartsClasses.HISunburst;
 import com.highsoft.highcharts.Common.HIChartsClasses.HITitle;
 import com.highsoft.highcharts.Common.HIChartsClasses.HITooltip;
-import com.highsoft.highcharts.Common.HIColor;
 import com.highsoft.highcharts.Core.HIChartView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class AnalysorHomeFragment extends Fragment {
 
@@ -103,7 +102,8 @@ public class AnalysorHomeFragment extends Fragment {
 
         HITooltip tooltip = new HITooltip();
         tooltip.setHeaderFormat("");
-        tooltip.setPointFormat("The expenditure amount of <b>{point.name}</b> is <b>{point.value}</b>");
+        tooltip.setPointFormat("The expenditure amount of <b>{point.name}" +
+                "</b> is <b>{point.value}</b>");
         options.setTooltip(tooltip);
 
         chartView.setOptions(options);
@@ -112,80 +112,58 @@ public class AnalysorHomeFragment extends Fragment {
     }
 
     private void fillData(HISunburst series) {
-        HashMap<String, Object> map1 = new HashMap<>();
-        map1.put("id", "0.0");
-        map1.put("parent", "");
-        map1.put("name", "Expense");
-        map1.put("color","#003300");
 
-        HashMap<String, Object> map2 = new HashMap<>();
-        map2.put("id", "1.0");
-        map2.put("parent","0.0");
-        map2.put("name", "Pubudu");
-        map2.put("color", "#ffff381a");
+        series.setData(new ArrayList<>(createHashMapArrayListForSunburstChart(AnalysorDBAdapter.
+                getInstance().fetchAllExpensesDataForAnalysor(getContext()))));
+    }
 
-        HashMap<String, Object> map3 = new HashMap<>();
-        map3.put("id", "1.1");
-        map3.put("parent","0.0");
-        map3.put("name", "Aradhana");
-        map3.put("color", "#ff1118ff");
+    private ArrayList<HashMap<String,Object>>
+    createHashMapArrayListForSunburstChart(Analysor[] analysorArray) {
+        HashMap<String, Object> map0 = new HashMap<>();
+        map0.put("id", "0.0");
+        map0.put("parent","");
+        map0.put("name", "Expense");
+        ArrayList<HashMap<String,Object>> list = new ArrayList<>();
+        list.add(map0);
+        double spenderID = 1.0;
+        double categoryID = 2.0;
+        double paymentMethodID = 3.0;
+        for(int i=0; i < analysorArray.length;)
+        {
+            int currentSpender = analysorArray[i].getExpenser();
+            HashMap<String, Object> spenderMap = new HashMap<>();
+            spenderMap.put("id",Double.toString(spenderID));
+            spenderMap.put("parent","0.0");
+            spenderMap.put("name",analysorArray[i].getSpenderName());
+            list.add(spenderMap);
+            while(i<analysorArray.length && currentSpender == analysorArray[i].getExpenser())
+            {
+                int currentCategory = analysorArray[i].getExpenditureCategoryID();
+                HashMap<String, Object> categoryMap = new HashMap<>();
+                categoryMap.put("id",Double.toString(categoryID));
+                categoryMap.put("parent",Double.toString(spenderID));
+                categoryMap.put("name",analysorArray[i].getCategoryName());
+                list.add(categoryMap);
+                while(i<analysorArray.length &&currentCategory == analysorArray[i].
+                        getExpenditureCategoryID() &&
+                        currentSpender == analysorArray[i].getExpenser() )
+                {
+                    HashMap<String, Object> paymentMethodMap = new HashMap<>();
+                    paymentMethodMap.put("id",Double.toString(paymentMethodID));
+                    paymentMethodMap.put("parent",Double.toString(categoryID));
+                    paymentMethodMap.put("name",analysorArray[i].getPaymentMethodName());
+                    paymentMethodMap.put("value",analysorArray[i].getExpenditureAmount());
+                    list.add(paymentMethodMap);
+                    paymentMethodID+=0.1;
+                    i++;
 
-        HashMap<String, Object> map4 = new HashMap<>();
-        map4.put("id", "2.0");
-        map4.put("parent","1.0");
-        map4.put("name", "Cash");
-        HashMap<String, Object> map5 = new HashMap<>();
-        map5.put("id", "2.1");
-        map5.put("parent","1.0");
-        map5.put("name", "SampathSharedDebitCard");
-        HashMap<String, Object> map6 = new HashMap<>();
-        map6.put("id", "2.2");
-        map6.put("parent","1.0");
-        map6.put("name", "CreditCard");
+                }
+                categoryID+=0.1;
+            }
+            spenderID+=0.1;
 
-        HashMap<String, Object> map7 = new HashMap<>();
-        map7.put("id", "2.3");
-        map7.put("parent","1.1");
-        map7.put("name", "CreditCard");
-        HashMap<String, Object> map8 = new HashMap<>();
-        map8.put("id", "2.4");
-        map8.put("parent","1.1");
-        map8.put("name", "SampathSharedDebitCard");
-
-        HashMap<String, Object> map9 = new HashMap<>();
-        map9.put("id", "3.0");
-        map9.put("parent","2.0");
-        map9.put("name", "Cloth");
-        map9.put("value", 3500);
-        HashMap<String, Object> map10 = new HashMap<>();
-        map10.put("id", "3.1");
-        map10.put("parent","2.1");
-        map10.put("name", "Food");
-        map10.put("value", 350);
-        HashMap<String, Object> map11 = new HashMap<>();
-        map11.put("id", "3.2");
-        map11.put("parent","2.1");
-        map11.put("name", "Keels");
-        map11.put("value", 1280);
-        HashMap<String, Object> map12 = new HashMap<>();
-        map12.put("id", "3.3");
-        map12.put("parent","2.2");
-        map12.put("name", "Petrol");
-        map12.put("value", 1400);
-
-        HashMap<String, Object> map13 = new HashMap<>();
-        map13.put("id", "3.4");
-        map13.put("parent","2.3");
-        map13.put("name", "Petrol");
-        map13.put("value", 1400);
-        HashMap<String, Object> map14 = new HashMap<>();
-        map14.put("id", "3.5");
-        map14.put("parent","2.4");
-        map14.put("name", "Keels");
-        map14.put("value", 1280);
-
-
-        series.setData(new ArrayList<>(Arrays.asList(map1, map2, map3, map4, map5, map6, map7, map8, map9, map10, map11, map12, map13, map14)));
+        }
+        return list;
     }
 
 
