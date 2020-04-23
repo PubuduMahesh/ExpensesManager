@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class AnalysorHomeFragment extends Fragment {
 
@@ -34,7 +33,7 @@ public class AnalysorHomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.highchart, container, false);
+        view = inflater.inflate(R.layout.highart_layout, container, false);
 
         HIChartView chartView = (HIChartView) view.findViewById(R.id.hc);
 

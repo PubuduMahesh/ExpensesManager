@@ -20,6 +20,11 @@
             android:id="@+id/nav_analysor"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/menu_analysor"/>
+
+        <item
+            android:id="@+id/nav_balance"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/menu_balance"/>
     </group>
 
 </menu>
