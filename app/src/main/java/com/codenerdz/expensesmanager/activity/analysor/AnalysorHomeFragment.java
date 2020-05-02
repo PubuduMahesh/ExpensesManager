@@ -5,115 +5,63 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIChart;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIColorVariation;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIDataLabels;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIFilter;
-import com.highsoft.highcharts.Common.HIChartsClasses.HILevels;
-import com.highsoft.highcharts.Common.HIChartsClasses.HIOptions;
-import com.highsoft.highcharts.Common.HIChartsClasses.HISubtitle;
-import com.highsoft.highcharts.Common.HIChartsClasses.HISunburst;
-import com.highsoft.highcharts.Common.HIChartsClasses.HITitle;
-import com.highsoft.highcharts.Common.HIChartsClasses.HITooltip;
-import com.highsoft.highcharts.Core.HIChartView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class AnalysorHomeFragment extends Fragment {
 
     private View view;
+    private WebView webView;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.highart_layout, container, false);
-
-        HIChartView chartView = (HIChartView) view.findViewById(R.id.hc);
-
-        chartView.plugins = new ArrayList<>(Arrays.asList("sunburst"));
-
-        HIOptions options = new HIOptions();
-
-        HIChart chart = new HIChart();
-        chart.setZoomType("xy");
-        options.setChart(chart);
-
-        HITitle title = new HITitle();
-        title.setText("Monthly Expenses");
-        options.setTitle(title);
-
-        HISubtitle subtitle = new HISubtitle();
-        options.setSubtitle(subtitle);
-
-        HISunburst series = new HISunburst();
-
-        fillData(series);
-
-        series.setAllowDrillToNode(true);
-        series.setCursor("pointer");
-
-        HIDataLabels datalabels = new HIDataLabels();
-        datalabels.setFormat("{point.name}");
-        datalabels.setFilter(new HIFilter());
-        datalabels.getFilter().setProperty("innerArcLength");
-        datalabels.getFilter().setOperator(">");
-        datalabels.getFilter().setValue(64);
-        series.setDataLabels(datalabels);
-
-        HILevels levels1 = new HILevels();
-        HashMap<String, Object> levelDataLabels = new HashMap<>();
-        levelDataLabels.put("rotationMode", "parallel");
-        HashMap<String, Object> filter = new HashMap<>();
-        filter.put("property", "outerArcLength");
-        filter.put("operator", ">");
-        filter.put("value", 64);
-        levelDataLabels.put("filter", filter);
-        levels1.setDataLabels(levelDataLabels);
-
-        HILevels levels2 = new HILevels();
-        levels2.setLevel(2);
-        HashMap<String, Object> levelDataLabels2 = new HashMap<>();
-        levelDataLabels2.put("rotationMode", "parallel");
-        levels2.setDataLabels(levelDataLabels2);
-
-        HILevels levels3 = new HILevels();
-        levels3.setLevel(3);
-        levels3.setColorVariation(new HIColorVariation());
-        levels3.getColorVariation().setKey("brightness");
-        levels3.getColorVariation().setTo(-0.5);
-
-        HILevels levels4 = new HILevels();
-        levels4.setLevel(4);
-        levels4.setColorVariation(new HIColorVariation());
-        levels4.getColorVariation().setKey("brightness");
-        levels4.getColorVariation().setTo(0.5);
-
-        series.setLevels(new ArrayList<>(Arrays.asList(levels1, levels2, levels3, levels4)));
-
-        options.setSeries(new ArrayList<>(Collections.singletonList(series)));
-
-        HITooltip tooltip = new HITooltip();
-        tooltip.setHeaderFormat("");
-        tooltip.setPointFormat("The expenditure amount of <b>{point.name}" +
-                "</b> is <b>{point.value}</b>");
-        options.setTooltip(tooltip);
-
-        chartView.setOptions(options);
-        chartView.setHovered(true);
+        view = inflater.inflate(R.layout.common_graph_layout, container, false);
+        initChart();
         return view;
     }
 
-    private void fillData(HISunburst series) {
+    private void initChart()
+    {
+        View stub =view.findViewById(R.id.line_chart_stub);
 
-        series.setData(new ArrayList<>(createHashMapArrayListForSunburstChart(AnalysorDBAdapter.
-                getInstance().fetchAllExpensesDataForAnalysor(getContext()))));
+        if (stub instanceof ViewStub)
+        {
+            ((ViewStub)stub).setVisibility(View.VISIBLE);
+            webView = (WebView)view.findViewById(R.id.daily_confirmed_line_chart_webview);
+
+            WebSettings webSettings =
+                    webView.getSettings();
+
+            webSettings.setJavaScriptEnabled(true);
+
+            webView.setWebChromeClient(new WebChromeClient());
+
+            webView.setWebViewClient(new WebViewClient()
+            {
+                @Override
+                public void onPageFinished(
+                        WebView view,
+                        String url)
+                {
+                    webView.loadUrl("javascript:loadSunburstChart()");
+                }
+            });
+
+            webView.loadUrl("file:///android_asset/"+"html/sunburst_chart.html");
+            webSettings.setDomStorageEnabled(true);
+
+        }
     }
 
     private ArrayList<HashMap<String,Object>>

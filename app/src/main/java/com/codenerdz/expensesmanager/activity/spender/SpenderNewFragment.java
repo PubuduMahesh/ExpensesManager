@@ -17,6 +17,7 @@ import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
 import com.codenerdz.expensesmanager.test.db.CategoryImageList;
+import com.codenerdz.expensesmanager.test.db.SpenderImageList;
 
 public class SpenderNewFragment extends NewItemFragment<Spender>
 {
@@ -40,7 +41,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
     {
         super.onActivityCreated(savedInstanceState);
         ImageAdapter spenderImageAdapter = new ImageAdapter(view.getContext(),
-                CategoryImageList.getInstance().getImageList());
+                SpenderImageList.getInstance().getImageList());
         gridView.setAdapter(spenderImageAdapter);
         imageItemSelectListener(gridView);
         addSpenderButtonClickListener();
