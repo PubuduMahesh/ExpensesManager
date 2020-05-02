@@ -13,11 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.category.Category;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
-import com.codenerdz.expensesmanager.test.db.CategoryImageList;
-import com.codenerdz.expensesmanager.test.db.SpenderImageList;
+import com.codenerdz.expensesmanager.toolkit.image.SpenderImageList;
 
 public class SpenderNewFragment extends NewItemFragment<Spender>
 {

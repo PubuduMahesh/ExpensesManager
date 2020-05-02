@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
-import com.codenerdz.expensesmanager.test.db.PaymentMethodImageList;
+import com.codenerdz.expensesmanager.toolkit.image.PaymentMethodImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
 
 public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>

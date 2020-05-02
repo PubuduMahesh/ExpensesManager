@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.codenerdz.expensesmanager.R;
 import com.codenerdz.expensesmanager.activity.common.NewItemFragment;
-import com.codenerdz.expensesmanager.test.db.CategoryImageList;
+import com.codenerdz.expensesmanager.toolkit.image.CategoryImageList;
 import com.codenerdz.expensesmanager.activity.common.ImageAdapter;
 
 

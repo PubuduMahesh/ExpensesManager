@@ -1,24 +1,13 @@
 package com.codenerdz.expensesmanager.activity.common;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
-import com.codenerdz.expensesmanager.activity.category.Category;
-import com.codenerdz.expensesmanager.activity.category.CategoryDBAdapter;
-import com.codenerdz.expensesmanager.test.db.CategoryImageList;
 import com.codenerdz.expensesmanager.toolkit.ActionValidatorToolkit;
 import com.codenerdz.expensesmanager.toolkit.ToolbarToolkit;
 
