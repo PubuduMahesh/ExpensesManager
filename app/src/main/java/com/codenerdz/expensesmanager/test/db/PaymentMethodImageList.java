@@ -17,9 +17,9 @@ public class PaymentMethodImageList {
 
     public int[] getImageList()
     {
-        int[] imageList = {R.drawable.payment_method_image_1,R.drawable.payment_method_image_2,R.drawable.payment_method_image_4,
-                R.drawable.payment_method_image_5,R.drawable.payment_method_image_6,R.drawable.payment_method_image_7,R.drawable.payment_method_image_8,
-                R.drawable.payment_method_image_9,R.drawable.payment_method_image_10,};
+        int[] imageList = {R.drawable.payment_method1,R.drawable.payment_method2,
+                R.drawable.payment_method3,R.drawable.payment_method4,
+                R.drawable.payment_method5,R.drawable.payment_method6,R.drawable.payment_method7};
         return imageList;
     }
 }
