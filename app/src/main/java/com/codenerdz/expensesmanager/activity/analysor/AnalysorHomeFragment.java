@@ -15,9 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.codenerdz.expensesmanager.R;
+import com.codenerdz.expensesmanager.toolkit.analysor.AnalysorDBToolkit;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 
 public class AnalysorHomeFragment extends Fragment {
 
@@ -37,6 +39,7 @@ public class AnalysorHomeFragment extends Fragment {
 
         if (stub instanceof ViewStub)
         {
+
             ((ViewStub)stub).setVisibility(View.VISIBLE);
             webView = (WebView)view.findViewById(R.id.daily_confirmed_line_chart_webview);
 
@@ -54,7 +57,8 @@ public class AnalysorHomeFragment extends Fragment {
                         WebView view,
                         String url)
                 {
-                    webView.loadUrl("javascript:loadSunburstChart()");
+                    String temp = createDataArrayForSunburstChart();
+                    webView.loadUrl("javascript:loadSunburstChart("+temp+")");
                 }
             });
 
@@ -64,54 +68,50 @@ public class AnalysorHomeFragment extends Fragment {
         }
     }
 
-    private ArrayList<HashMap<String,Object>>
-    createHashMapArrayListForSunburstChart(Analysor[] analysorArray) {
-        HashMap<String, Object> map0 = new HashMap<>();
-        map0.put("id", "0.0");
-        map0.put("parent","");
-        map0.put("name", "Expense");
-        ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-        list.add(map0);
-        double spenderID = 1.0;
-        double categoryID = 2.0;
-        double paymentMethodID = 3.0;
-        for(int i=0; i < analysorArray.length;)
+    private String createDataArrayForSunburstChart()
+    {
+        Analysor[] array = AnalysorDBAdapter.getInstance().
+                fetchAllExpensesDataForAnalysor(getContext());
+        String spenderName;
+        String categoryName;
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        json.append("\"name\": \"Expenses\",\n\t \"children\": [\n");
+
+        int i=0;
+        while(i<array.length)
         {
-            int currentSpender = analysorArray[i].getExpenser();
-            HashMap<String, Object> spenderMap = new HashMap<>();
-            spenderMap.put("id",Double.toString(spenderID));
-            spenderMap.put("parent","0.0");
-            spenderMap.put("name",analysorArray[i].getSpenderName());
-            list.add(spenderMap);
-            while(i<analysorArray.length && currentSpender == analysorArray[i].getExpenser())
+            json.append("\t\t{\"name\": "+"\""+array[i].getSpenderName()+"\",\n");
+            json.append("\t\t\t\"children\": [\n");
+            spenderName = array[i].getSpenderName();
+            while(i<array.length && spenderName.equals(array[i].getSpenderName()))
             {
-                int currentCategory = analysorArray[i].getExpenditureCategoryID();
-                HashMap<String, Object> categoryMap = new HashMap<>();
-                categoryMap.put("id",Double.toString(categoryID));
-                categoryMap.put("parent",Double.toString(spenderID));
-                categoryMap.put("name",analysorArray[i].getCategoryName());
-                list.add(categoryMap);
-                while(i<analysorArray.length &&currentCategory == analysorArray[i].
-                        getExpenditureCategoryID() &&
-                        currentSpender == analysorArray[i].getExpenser() )
+                json.append("\t\t\t\t{\n");
+                json.append("\t\t\t\t\t\"name\": "+"\""+array[i].getCategoryName()+"\",\n");
+                json.append("\t\t\t\t\t\t\"children\": [\n");
+                categoryName = array[i].getCategoryName();
+                while(i<array.length && categoryName.equals(array[i].getCategoryName()))
                 {
-                    HashMap<String, Object> paymentMethodMap = new HashMap<>();
-                    paymentMethodMap.put("id",Double.toString(paymentMethodID));
-                    paymentMethodMap.put("parent",Double.toString(categoryID));
-                    paymentMethodMap.put("name",analysorArray[i].getPaymentMethodName());
-                    paymentMethodMap.put("value",analysorArray[i].getExpenditureAmount());
-                    list.add(paymentMethodMap);
-                    paymentMethodID+=0.1;
+                    json.append("\t\t\t\t\t\t\t{\"name\": \"" + array[i].getPaymentMethodName() + "\", \"value\": \"" + array[i].getExpenditureAmount() + "\"},\n");
                     i++;
-
                 }
-                categoryID+=0.1;
+                json.deleteCharAt(json.length()-2);
+                json.append("\t\t\t\t\t\t]");
+                json.append("\n\t\t\t\t},\n");
             }
-            spenderID+=0.1;
-
+            json.deleteCharAt(json.length()-2);
+            json.append("\t\t\t]\n");
+            json.append("\t\t},\n");
         }
-        return list;
+        json.deleteCharAt(json.length()-2);
+        json.append("\t]\n");
+        json.append("}");
+
+        return json.toString();
     }
+
+
+
 
 
 }
