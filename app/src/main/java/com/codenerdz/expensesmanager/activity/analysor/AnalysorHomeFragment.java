@@ -57,8 +57,8 @@ public class AnalysorHomeFragment extends Fragment {
                         WebView view,
                         String url)
                 {
-                    String temp = createDataArrayForSunburstChart();
-                    webView.loadUrl("javascript:loadSunburstChart("+temp+")");
+                    webView.loadUrl("javascript:loadSunburstChart" +
+                            "("+createDataArrayForSunburstChart()+")");
                 }
             });
 
@@ -90,9 +90,12 @@ public class AnalysorHomeFragment extends Fragment {
                 json.append("\t\t\t\t\t\"name\": "+"\""+array[i].getCategoryName()+"\",\n");
                 json.append("\t\t\t\t\t\t\"children\": [\n");
                 categoryName = array[i].getCategoryName();
-                while(i<array.length && categoryName.equals(array[i].getCategoryName()))
+                while(i<array.length && spenderName.equals(array[i].getSpenderName()) &&
+                        categoryName.equals(array[i].getCategoryName()))
                 {
-                    json.append("\t\t\t\t\t\t\t{\"name\": \"" + array[i].getPaymentMethodName() + "\", \"value\": \"" + array[i].getExpenditureAmount() + "\"},\n");
+                    json.append("\t\t\t\t\t\t\t{\"name\": \"" +
+                            array[i].getPaymentMethodName() + "\", \"value\": \"" +
+                            array[i].getExpenditureAmount() + "\"},\n");
                     i++;
                 }
                 json.deleteCharAt(json.length()-2);
