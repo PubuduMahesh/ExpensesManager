@@ -21,6 +21,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
 {
     private View view;
     private GridView gridView;
+    private EditText spenderNameTextField;
 
 
     @Override
@@ -29,6 +30,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
     {
         view = inflater.inflate(R.layout.new_spender_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
+        spenderNameTextField = (EditText)view.findViewById(R.id.spender_name_textfield) ;
         setHasOptionsMenu(true);
         setTitle(getResources().getString(R.string.new_spender));
         return view;
@@ -41,7 +43,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
         ImageAdapter spenderImageAdapter = new ImageAdapter(view.getContext(),
                 SpenderImageList.getInstance().getImageList());
         gridView.setAdapter(spenderImageAdapter);
-        imageItemSelectListener(gridView);
+        imageItemSelectListener(gridView,spenderNameTextField);
         addSpenderButtonClickListener();
 
     }
@@ -56,8 +58,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
             {
                 int spenderImageSource = -100;
                 Spender spender = new Spender();
-                String spenderName = ((EditText)view.findViewById
-                        (R.id.spender_name_textfield)).getText().toString();
+                String spenderName = spenderNameTextField.getText().toString();
                 if(selectedImage != null)
                 {
                     spenderImageSource =

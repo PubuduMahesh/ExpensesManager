@@ -1,9 +1,12 @@
 package com.codenerdz.expensesmanager.activity.category;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -23,7 +26,7 @@ public class CategoryNewFragment extends NewItemFragment<Category>
 
     private View view;
     private GridView gridView;
-
+    private EditText categoryNameTextField;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,6 +35,8 @@ public class CategoryNewFragment extends NewItemFragment<Category>
         view = inflater.inflate(R.layout.new_category_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
         setTitle(getResources().getString(R.string.new_category));
+        categoryNameTextField = ((EditText)view.findViewById
+                (R.id.category_name_textfield));
         return view;
     }
 
@@ -42,7 +47,7 @@ public class CategoryNewFragment extends NewItemFragment<Category>
         ImageAdapter categoryImageAdapter = new ImageAdapter(view.getContext(),
                 CategoryImageList.getInstance().getImageList());
         gridView.setAdapter(categoryImageAdapter);
-        imageItemSelectListener(gridView);
+        imageItemSelectListener(gridView,categoryNameTextField);
         addCategoryButtonClickListener();
 
     }
@@ -55,10 +60,10 @@ public class CategoryNewFragment extends NewItemFragment<Category>
             @Override
             public void onClick(View v)
             {
+                categoryNameTextField.setEnabled(false);
                 int categorySource = -100;
                 Category category = new Category();
-                String categoryName = ((EditText)view.findViewById
-                        (R.id.category_name_textfield)).getText().toString();
+                String categoryName = categoryNameTextField.getText().toString();
                 if(selectedImage != null)
                 {
                     categorySource =
@@ -82,4 +87,5 @@ public class CategoryNewFragment extends NewItemFragment<Category>
     {
         CategoryDBAdapter.getInstance().createCategory(category,view.getContext());
     }
+
 }

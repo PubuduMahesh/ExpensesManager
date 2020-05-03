@@ -22,6 +22,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
 {
     private View view;
     private GridView gridView;
+    private EditText paymentMethodNameTextField;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -29,6 +30,8 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
     {
         view = inflater.inflate(R.layout.new_payment_method_layout, container, false);
         gridView = (GridView) view.findViewById(R.id.grid_view);
+        paymentMethodNameTextField = ((EditText)view.findViewById
+                (R.id.payment_method_name_text_field));
         setHasOptionsMenu(true);
         setTitle(getResources().getString(R.string.new_payment_method));
         return view;
@@ -41,7 +44,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
         ImageAdapter paymentMethodImageAdapter = new ImageAdapter(view.getContext(),
                 PaymentMethodImageList.getInstance().getImageList());
         gridView.setAdapter(paymentMethodImageAdapter);
-        imageItemSelectListener(gridView);
+        imageItemSelectListener(gridView,paymentMethodNameTextField);
         addPaymentMethodButtonClickListener();
     }
 
@@ -56,8 +59,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
                 int paymentMethodImageSource = -100;
                 boolean isSharedOption = false;
                 PaymentMethod paymentMethod = new PaymentMethod();
-                String paymentMethodName = ((EditText)view.findViewById
-                        (R.id.payment_method_name_text_field)).getText().toString();
+                String paymentMethodName = paymentMethodNameTextField.getText().toString();
                 if(selectedImage != null)
                 {
                     paymentMethodImageSource =
