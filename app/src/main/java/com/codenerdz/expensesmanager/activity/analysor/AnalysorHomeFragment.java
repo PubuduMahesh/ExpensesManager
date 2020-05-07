@@ -50,31 +50,44 @@ public class AnalysorHomeFragment extends Fragment {
 
             webView.setWebChromeClient(new WebChromeClient());
 
-            webView.setWebViewClient(new WebViewClient()
+            Analysor[] array = AnalysorDBAdapter.getInstance().
+                    fetchAllExpensesDataForAnalysor(getContext());
+            if(array.length>0)
             {
-                @Override
-                public void onPageFinished(
-                        WebView view,
-                        String url)
+                webView.setWebViewClient(new WebViewClient()
                 {
-                    webView.loadUrl("javascript:loadSunburstChart" +
-                            "("+createDataArrayForSunburstChart()+")");
-                }
-            });
+                    @Override
+                    public void onPageFinished(
+                            WebView view,
+                            String url)
+                    {
+                        webView.loadUrl("javascript:loadSunburstChart" +
+                                "("+createDataArrayForSunburstChart(array)+")");
+                    }
+                });
+                webView.loadUrl("file:///android_asset/"+"html/sunburst_chart.html");
+            }
+            else
+            {
+                webView.loadUrl("file:///android_asset/"+"html/empty_page.html");
+            }
 
-            webView.loadUrl("file:///android_asset/"+"html/sunburst_chart.html");
             webSettings.setDomStorageEnabled(true);
 
         }
     }
 
-    private String createDataArrayForSunburstChart()
+    private String createDataArrayForSunburstChart(Analysor[] array)
     {
-        Analysor[] array = AnalysorDBAdapter.getInstance().
-                fetchAllExpensesDataForAnalysor(getContext());
         String spenderName;
         String categoryName;
         StringBuilder json = new StringBuilder();
+
+        if(array.length==0)
+        {
+            return "";
+        }
+
         json.append("{");
         json.append("\"name\": \"Expenses\",\n\t \"children\": [\n");
 
