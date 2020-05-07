@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">ExpensesManager</string>
+    <string name="app_name">Expenses Manager</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Expenses Manager</string>
-    <string name="nav_header_subtitle">powered by codenerdz</string>
+    <string name="nav_header_subtitle">powered by Codenerdz</string>
     <string name="nav_header_desc">Navigation header</string>
 
     <!--side navigation menu items-->
