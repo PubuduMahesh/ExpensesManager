@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +24,7 @@ public abstract class NewItemFragment <T> extends Fragment implements ToolbarDet
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             int preSelGridItem = -1;
             View viewPrev;
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 editText.setEnabled(false);
@@ -40,7 +42,7 @@ public abstract class NewItemFragment <T> extends Fragment implements ToolbarDet
                 {
                     selectedImage = (View) gridView.
                             getChildAt(position-gridView.getFirstVisiblePosition());
-                    selectedImage.setBackgroundColor(getResources().getColor(R.color.blue));
+                    selectedImage.setBackground(getResources().getDrawable(R.drawable.highlighter));
                 }
                 editText.setEnabled(true);
             }
