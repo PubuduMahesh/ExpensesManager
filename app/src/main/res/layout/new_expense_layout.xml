@@ -82,21 +82,26 @@
 
             <Button
                 android:id="@+id/add_category"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="Category" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:text="Category"
+                android:inputType="textCapWords"
+                android:textSize="11sp"/>
 
             <Button
                 android:id="@+id/add_payment_method"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="Paymethd" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:text="Payment Method"
+                android:inputType="textCapWords"
+                android:textSize="7sp"/>
 
             <Button
                 android:id="@+id/add_sponsor"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:text="Sponsor" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:text="Sponsor"
+                android:textSize="11sp"/>
         </LinearLayout>
 
         <CalendarView
