@@ -6,6 +6,7 @@ android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:orientation="horizontal">
 
         <TextView
@@ -18,7 +19,7 @@ android:layout_height="match_parent">
             android:id="@+id/add_new_payment_method_button"
             android:layout_width="70dp"
             android:layout_height="35dp"
-            android:background="@color/green"
+            android:background="@drawable/radius_corners_background"
             android:textAlignment="center"
             android:text="Add"
             android:textColor="@color/black"/>
@@ -37,12 +38,13 @@ android:layout_height="match_parent">
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/name"
+            android:textColor="@color/black"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/payment_method_name_text_field"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
+            android:background="@drawable/radius_corners_background"
             android:gravity="start"
             android:layout_weight="2"
             android:textColor="@color/black"/>
@@ -64,12 +66,14 @@ android:layout_height="match_parent">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/individual"
+                android:textColor="@color/black"
                 android:checked="true" />
 
             <RadioButton
                 android:id="@+id/radio_button_shared"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="@string/shared" />
 
         </RadioGroup>

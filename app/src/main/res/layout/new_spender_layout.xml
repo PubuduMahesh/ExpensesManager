@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/new_spender"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -7,6 +8,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:padding="1dp"
         android:orientation="horizontal">
 
         <TextView
@@ -19,9 +21,10 @@
             android:id="@+id/add_new_spender_button"
             android:layout_width="70dp"
             android:layout_height="35dp"
-            android:background="@color/green"
             android:textAlignment="center"
+            android:background="@drawable/radius_corners_background"
             android:text="Add"
+            android:shadowColor="@color/button_background"
             android:textColor="@color/black"/>
     </LinearLayout>
 
@@ -38,12 +41,13 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/name"
+            android:textColor="@color/black"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/spender_name_textfield"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
+            android:background="@drawable/radius_corners_background"
             android:gravity="start"
             android:layout_weight="2"
             android:textColor="@color/black"/>
