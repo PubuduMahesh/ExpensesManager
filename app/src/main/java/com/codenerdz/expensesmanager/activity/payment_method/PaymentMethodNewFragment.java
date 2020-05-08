@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,6 +75,11 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
                     paymentMethod.setPaymentMethodImageSource(paymentMethodImageSource);
                     createNewItem(paymentMethod);
                     getFragmentManager().popBackStack();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Category name and picture is compulsory",
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }

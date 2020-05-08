@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,6 +78,11 @@ public class CategoryNewFragment extends NewItemFragment<Category>
                     createNewItem(category);
                     getFragmentManager().popBackStack();
 
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Category name and picture is compulsory",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

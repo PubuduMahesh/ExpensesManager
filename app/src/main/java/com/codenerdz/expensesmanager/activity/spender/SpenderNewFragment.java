@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,6 +73,11 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
                     createNewItem(spender);
                     getFragmentManager().popBackStack();
 
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Category name and picture is compulsory",
+                            Toast.LENGTH_SHORT).show();
                 }
 
             }

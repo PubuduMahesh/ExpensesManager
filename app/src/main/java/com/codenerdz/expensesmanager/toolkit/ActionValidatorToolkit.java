@@ -19,7 +19,7 @@ public class ActionValidatorToolkit
 
     public boolean isNameTextFieldEmpty(String name)
     {
-        if(name.length()<0)
+        if(name.length()<=0)
         {
             return false;
         }
