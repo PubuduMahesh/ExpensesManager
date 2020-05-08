@@ -23,6 +23,7 @@
             android:focusableInTouchMode="false"
             android:layout_width="265dp"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:layout_gravity="center_vertical" />
 
         <EditText
@@ -33,7 +34,9 @@
             android:inputType="numberDecimal"
             android:clickable="false"
             android:focusable="false"
+            android:background="@null"
             android:focusableInTouchMode="false"
-            android:gravity="left" />
+            android:layout_gravity="center"
+            android:gravity="right" />
     </LinearLayout>
 </LinearLayout>
