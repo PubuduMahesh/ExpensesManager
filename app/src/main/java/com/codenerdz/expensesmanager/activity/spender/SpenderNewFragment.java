@@ -76,7 +76,7 @@ public class SpenderNewFragment extends NewItemFragment<Spender>
                 }
                 else
                 {
-                    Toast.makeText(getContext(),"Category name and picture is compulsory",
+                    Toast.makeText(getContext(),"Spender name and picture is compulsory",
                             Toast.LENGTH_SHORT).show();
                 }
 

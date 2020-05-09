@@ -78,7 +78,7 @@ public class PaymentMethodNewFragment extends NewItemFragment<PaymentMethod>
                 }
                 else
                 {
-                    Toast.makeText(getContext(),"Category name and picture is compulsory",
+                    Toast.makeText(getContext(),"Payment method name and picture is compulsory",
                             Toast.LENGTH_SHORT).show();
                 }
 
